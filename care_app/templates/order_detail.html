@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали заказа</title>
+    <link rel="stylesheet" href="{% static 'care_app/header.css' %}">
+    <link rel="stylesheet" href="{% static 'care_app/all_orders.css' %}">
+    <style>
+        @font-face {
+            font-family: 'PTSans';
+            src: url("{% static 'fonts/PTSans-Regular.ttf' %}") format('truetype');
+        } @font-face {
+            font-family: 'Roboto';
+            src: url("{% static 'fonts/Roboto-Regular.ttf' %}") format('truetype');
+        } @font-face {
+            font-family: 'Monsterrat';
+            src: url("{% static 'fonts/Montserrat-Regular.ttf' %}") format('truetype');
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class='content'>
+        <h1>Детали заказа</h1>
+
+        <div class="order-details">
+            <h3>{{ order.task_name }}</h3>
+            <p><strong>Кому нужна помощь:</strong> {{ order.help_for }}</p>
+            <p><strong>Пол клиента:</strong> {{ order.gender }}</p>
+            <p><strong>Возраст:</strong> {{ order.age }}</p>
+            <p><strong>Вес (кг):</strong> {{ order.weight }}</p>
+            <p><strong>Рост (см):</strong> {{ order.height }}</p>
+            <p><strong>Особенности здоровья:</strong> {{ order.health_issues }}</p>
+            <p><strong>Передвижение:</strong> {{ order.mobility }}</p>
+            <p><strong>Место ухода:</strong> {{ order.care_location }}</p>
+            <p><strong>Частота:</strong> {{ order.frequency }}</p>
+            <p><strong>Время работы:</strong> {{ order.working_hours }}</p>
+            <p><strong>Дата начала:</strong> {{ order.start_date }}</p>
+            <p><strong>Адрес:</strong> {{ order.address }}</p>
+            <p><strong>Минимальная оплата:</strong> {{ order.payment_min }}</p>
+            <p><strong>Максимальная оплата:</strong> {{ order.payment_max }}</p>
+            <p><strong>Пожелания:</strong> {{ order.additional_notes }}</p>
+            <p><strong>Контакты:</strong> {{ order.phone }} ({{ order.full_name }})</p>
+            <p><strong>Создан:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+            <p><strong>Статус:</strong> {{ order.status }}</p>
+            <div class='buttons'>
+            {%if action == 'my_orders'%}
+            <a href="{% url 'my_orders' %}" class="return">Вернуться к списку</a>
+            {%else%}
+            <a href="{% url 'all_orders' %}" class="return">Вернуться к списку</a>
+            {%endif%}
+            {% if order.status == 'В ожидании' %}
+            <a class='accept' href='/order/{{order.id}}/accept'>Принять запрос</a>
+            {% endif%}
+            </div>
+        </div>
+    </div>
+    
+
+
+    <div style='margin:100px;'></div>
+    {% include 'footer.html' %}
+</body>

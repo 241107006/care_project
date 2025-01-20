@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Профиль</title>
+        <link rel="stylesheet" href="{% static 'care_app/header.css' %}">
+        <link rel="stylesheet" href="{% static 'care_app/profile.css' %}">
+        <style>
+            @font-face {
+                font-family: 'PTSans';
+                src: url("{% static 'fonts/PTSans-Regular.ttf' %}") format('truetype');
+            } @font-face {
+                font-family: 'Roboto';
+                src: url("{% static 'fonts/Roboto-Regular.ttf' %}") format('truetype');
+            } @font-face {
+                font-family: 'Monsterrat';
+                src: url("{% static 'fonts/Montserrat-Regular.ttf' %}") format('truetype');
+            } .header {
+                border-bottom: none;
+            }
+        </style>
+    </head>
+<body>
+    {% include 'header.html' %}
+    <div class='content'>
+        <div class='links'>
+            <a href='/my_orders'>История заявок</a>
+            <a href='/chats'>Чат-поддержка</a>
+            <a href='/profile' class='checked' disabled>Настройки профиля</a>
+            <a href='/notifications'>Уведомления</a>
+            <a href='/logout'>Выйти</a>
+        </div>
+        <div class='profile' {% if request.user.document %} style='height: 883px;' {% endif %}>
+            <div class='pfp'>
+                {% if user.profile_picture %}
+                <img id='photo' src="{{request.user.profile_picture.url}}">
+                {% else %}
+                <img id='photo' src="{% static 'images/default_picture.png' %}">
+                {% endif %}
+                <div>
+                    <h1>Фото профиля</h1>
+                    <p>Добавьте или измените фото профиля</p>
+                </div>
+            </div>
+            <form method='post' enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type='file' accept='image/*' id='file-input' style='display:none;' name='photo'>
+                <h1>Персональные данные</h1>
+                <div class='top'>
+                    <div>
+                        <p>Имя</p>
+                        <input type='text' placeholder='{{request.user.name}}' name='name'>
+                    </div>
+                    <div>
+                        <p>Фамилия</p>
+                        <input type='text' placeholder='{{request.user.surname}}' name='surname'>
+                    </div>
+                    <div>
+                        <p>Пол</p>
+                        <select name='gender'>
+                            <option value='Male' {% if request.user.sex == 'Male' %}selected{% endif %}>Мужской</option>
+                            <option value='Female' {% if request.user.sex == 'Female' %}selected{% endif %}>Женский</option>
+                        </select>
+                    </div>
+                </div>
+                <div class='nottop'>
+                    <p>Контактные данные</p>
+                    <input type='text' placeholder='{{request.user.phone}}' name='phone'>
+                </div>
+                <div class='nottop'>
+                    <p>Дата рождения</p>
+                    <input type='date' value="{{ request.user.birthday|date:'Y-m-d' }}" name='birthday'>
+                </div>
+                <div class='nottop'>
+                    <div style='display:flex; gap: 20px; margin-top: 10px;'>
+                    <p>Документ</p>
+                    <input type='file' accept='image/*' name='document' id='documentInput' style='display:none;'>
+                    <img class='upload' src="{%static 'images/upload.png'%}" onclick='upload_photo();' id='upload'>
+                </div></div>
+                {% if request.user.document %}
+                {% if document_is_pdf %}
+                    <!--  ,application/pdf  <a href="{{ user.document.url }}" download="{{user.document.name}}">
+                        <button style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            Download PDF Document
+                        </button>
+                    </a>!-->
+                {% else %}
+                    <img src="{{ request.user.document.url }}" alt="Uploaded Document" style="width: auto; height: 200px;">
+                {% endif %}{% endif %}
+                <div class='buttons'>
+                    <button type='submit'>Сохранить профиль</button>
+                    <a href='/logout'>Удалить профиль</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const documentFile = document.getElementById('documentInput');
+        function upload_photo() {
+            documentFile.click();
+        }
+
+        const image = document.getElementById('photo');
+        const fileInput = document.getElementById('file-input');
+    
+        image.addEventListener('click', () => {
+            fileInput.click();
+        });
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    image.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+    <div style='margin:200px'></div>
+    {% include 'footer.html' %}
+</body>
+</html>

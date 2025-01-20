@@ -1,0 +1,20 @@
+{% load static %}
+<header class='header'>
+    <a href='/' style='text-decoration:none;color:inherit;'><div class='header-logo'>CARE+</div><a>
+    <a href='/' style='text-decoration:none;color:black;'><p class='header-text'>Главная</p></a>
+    <p class='header-text'>Алматы</p>
+    {% if user.is_authenticated %}
+        {% if request.user.user_type == 'Client' %}
+            <a href='/login' style='text-decoration:none;color:black;'><div class='header-client'>Вход для клиентов</div></a>
+            <a href="/my_orders" style='text-decoration:none;color:black;'><div class='header-spec'>Мои заказы</div></a>
+        {% else %}
+            <a href='/login' style='text-decoration:none;color:black;'><div class='header-client'>Вход для специалистов</div></a>
+            <a href="/all_orders" style='text-decoration:none;color:black;'><div class='header-spec'>Заказы</div></a>
+        {% endif %}
+        <a href='/profile' style='text-decoration:none; color: inherit;'><div class='header-guest'><img src="{% static 'images/user-header.png' %}">{{user.name}}</div></a>
+    {% else %}
+    <a href='/login' style='text-decoration:none;color:black;'><div class='header-client'>Вход для клиентов</div></a>
+    <a href='/my_orders' style='text-decoration:none;color:black;'><div class='header-spec'>Мои заказы</div></a>
+    <div class='header-guest'><img src="{% static 'images/guest-header.png' %}">Гость</div>
+    {% endif%}
+</header>

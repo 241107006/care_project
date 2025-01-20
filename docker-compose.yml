@@ -1,0 +1,10 @@
+services:
+  web:
+    image: almas200103395/care_app:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - DJANGO_SETTINGS_MODULE=care_project.settings
