@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Чаты</title>
+        <link rel="stylesheet" href="{% static 'care_app/header.css' %}">
+        <link rel="stylesheet" href="{% static 'care_app/chats.css' %}">
+        <style>
+            @font-face {
+                font-family: 'PTSans';
+                src: url("{% static 'fonts/PTSans-Regular.ttf' %}") format('truetype');
+            } @font-face {
+                font-family: 'Roboto';
+                src: url("{% static 'fonts/Roboto-Regular.ttf' %}") format('truetype');
+            } @font-face {
+                font-family: 'Monsterrat';
+                src: url("{% static 'fonts/Montserrat-Regular.ttf' %}") format('truetype');
+            } .header {
+                border-bottom: none;
+            }
+        </style>
+    </head>
+<body>
+    {% include 'header.html' %}
+    <div class='content'>
+        <div class='links'>
+            <a href='/my_orders'>История заявок</a>
+            <a href='/chats' class='checked' disabled>Чат-поддержка</a>
+            <a href='/profile'>Настройки профиля</a>
+            <a href='/notifications'>Уведомления</a>
+            <a href='/logout'>Выйти</a>
+        </div>
+        <div class='block'>
+            <div class='vertical-line'></div>
+            <div class='top'>
+                <div class='search-container'><input type='text' class='search' placeholder='Поиск чатов'></div>
+                <div class='chat-info'>
+                    <h1 class='notchosen'>Выберите чат, чтобы начать разговор</h1>
+                </div>
+            </div>
+            <div style='display:flex;'>
+            <div class='left'>
+                {% for chat in chats %}
+                    {% if forloop_counter > 0 %}
+                    <div class='horizontal'></div>
+                    {% endif %}
+                    <a style='text-decoration:none; color:inherit;' href='/chat/{{chat.chat.id}}'><div class='chat'>
+                        <img src="{%if chat.other_user.profile_picture%}{{ chat.other_user.profile_picture.url }}{%endif%}" alt="{{ other_user.username }}" onerror="this.src='{% static 'images/fallback.png' %}'">
+                        <div style='display:flex;'>
+                            <p>{{ chat.other_user.name }}</p>
+                            <p>{{ chat.chat.last_message.created_at|date:"d.m.Y" }}</p>
+                        </div>
+                    </div></a>
+                {% endfor %}
+                {% if not chats %}
+                <h1 class='nochats'>У вас нет чатов</h1>
+                {% endif %}
+            </div>
+            <div class='right'>
+                <div class='messages'>
+                    {% for message in messages %}
+                        {% if message.sender == request.user %}
+                        <div class="message message-sent">
+                            <p>{{ message.text }}</p>
+                            {% if message.file %}
+                                <img src="{{ message.file.url }}" alt="Sent File">
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <div class="message message-received">
+                            <p>{{ message.text }}</p>
+                            {% if message.file %}
+                                <img src="{{ message.file.url }}" alt="Received File">
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class='input'>
+                    <img src="{% static 'images/add-file.png' %}" class='add'>
+                    <div class='inputline'>
+                        <img src="{%static 'images/smile.png'%}">
+                        <input type='text' placeholder='Добрый день!'>
+                    </div>
+                    <img src="{% static 'images/send.png' %}" class='send'>
+                </div>
+            </div></div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+</html>

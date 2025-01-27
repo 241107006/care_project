@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    font-family: Monsterrat;
+}
+.content {
+    margin-top: 52px;
+    display: flex;
+    justify-content: center;
+    gap: 29px;
+    height: auto;
+}
+.links {
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 360px;
+}
+.links a {
+    text-decoration: none;
+    color: black;
+    align-items: center;
+    height: 44px;
+    display: flex;
+    font-size: 20px;
+}
+.checked {
+    border-radius: 10px;
+    padding-left: 30px;
+    width: 330px;
+    background-color: rgba(217, 217, 217, 1);
+}
+
+.block {
+    font-family: Roboto;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(191, 190, 190, 1);
+    background: rgba(255, 255, 255, 1);
+    width: 937px;
+    height: 583px;
+    border-radius: 10px;
+    overflow-y: scroll;
+}
+.block p {
+    margin: 0;
+}
+.block h1 {
+    margin: 0;
+}
+.block::-webkit-scrollbar {
+    display: none;
+}
+.top {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(191, 190, 190, 1);
+}
+.top p {
+    margin-left: 33px;
+    font-size: 24px;
+    font-weight: 400;
+}
+.notification {
+    height: 120px;
+    width: 100%;
+    display: flex;
+    gap: 100px;
+}
+.horizontal {
+    display: flex;
+    justify-content: center;
+}
+.horizontal div {
+    height: 1px;
+    width: 899px;
+    background-color: rgba(191, 190, 190, 1);
+}
+.texts {
+    margin-top: 20px;
+    margin-left: 202px;
+}
+.not-top {
+    font-weight: 600;
+    font-size: 20px;
+}
+.not-bot {
+    font-weight: 400;
+    font-size: 18px;
+}
+.action {
+    align-self: center;
+    text-decoration: none;
+    color: white;
+    background-color: rgba(75, 86, 85, 1);
+    height: 37px;
+    width: 149px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 20px;
+    font-family: PTSans;
+}

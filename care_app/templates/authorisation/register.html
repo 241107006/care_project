@@ -1,0 +1,303 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        @font-face {
+            font-family: 'PTSans';
+            src: url("{% static 'fonts/PTSans-Regular.ttf' %}") format('truetype');
+        } @font-face {
+            font-family: 'Roboto';
+            src: url("{% static 'fonts/Roboto-Regular.ttf' %}") format('truetype');
+        } @font-face {
+            font-family: 'Monsterrat';
+            src: url("{% static 'fonts/Montserrat-Regular.ttf' %}") format('truetype');
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'care_app/authorisation/base.css' %}">
+    <link rel="stylesheet" href="{% static 'care_app/header.css' %}">
+</head>
+<body>
+    <header class='header'>
+        <div class='header-logo'>CARE+</div>
+        <a href='/' style='text-decoration:none;color:black;'><p class='header-text'>Главная</p></a>
+        <p class='header-text'>Алматы</p>
+        <a href='/login' style='text-decoration:none;color:black;'><div class='header-client'>Вход для клиентов</div></a>
+        <a href='/login' style='text-decoration:none;color:black;'><div class='header-spec'>Вход<br>для специалистов</div></a>
+        <div class='header-guest'><img src="{% static 'images/guest-header.png' %}">Гость</div>
+    </header>
+    <div class='content'>
+        <h1 class='content-name'>Регистрация</h1>
+        <p class='content-step'>Шаг {{step}} из 4</p>
+        <form method='post' class='register-box' id='step1'>
+            {% csrf_token %}
+            <div class='input-line'>
+                <label for='input-phone'>
+                    Номер телефона
+                    <input id='input-phone' type='text' name='phone' placeholder='+7 (___) ___ - __ - __'>
+                </label>
+            </div>
+            <div class='input-line'>
+                <label for='input-email'>
+                    Адрес электронной почты
+                    <input id='input-email' type='email' name='email'>
+                </label>
+            </div>
+            <button type='submit'>Продолжить</button>
+        </form>
+
+        <form method='post' class='register-box' id='step2' style='padding-bottom: 56px; text-align: center;'>
+            {% csrf_token %}
+            <h1 style="
+            margin: 0;
+            font-size: 22px;
+            font-weight: 400;
+            font-family: 'PTSANS';
+            margin-bottom: 4px;">Введите код из SMS {{code}}</h1>
+            <p style="
+            margin: 0;
+            font-weight: 400;
+            font-size: 13px;
+            font-family: 'PTSANS';
+            color: rgba(110, 117, 124, 1);">Код отправлен на номер +7 701 817 85 70</p>
+            <div class='sms-code'>
+                <input type="text" maxlength="1" id="digit-1" class="digit-input" />
+                <input type="text" maxlength="1" id="digit-2" class="digit-input" />
+                <input type="text" maxlength="1" id="digit-3" class="digit-input" />
+                <input type="text" maxlength="1" id="digit-4" class="digit-input" />
+                <input type="text" maxlength="1" id="digit-5" class="digit-input" />
+                <input type="text" maxlength="1" id="digit-6" class="digit-input" />
+                <input type='hidden' id='full-code' name='code'/>
+            </div>
+            <p style="
+            margin: 0;
+            font-weight: 400;
+            font-size: 13px;
+            font-family: 'PTSANS';
+            color: rgba(110, 117, 124, 1);">Получить новый код можно через <span id='sec'>30</span> сек.</p>
+            <p style="
+            color: rgba(53,147,234,1);
+            font-weight: 400;
+            font-size: 13px;
+            font-family: 'PTSANS';
+            width: 392px;
+            margin-left: 70px;">Вводя код Вы подписываете согласие на сбор, получение, обработку персональных данных</p>
+
+            <button type='submit' disabled id='step2-btn'>Продолжить</button>
+        </form>
+
+        <form method='post' class='register-box' id='step3' style='padding-top: 40px;height: 357px;'>
+            {% csrf_token %}
+            <div class='input-line' style='margin-bottom:11px;'>
+                <label for='input-name'>
+                    ФИО
+                    <input id='input-name' type='text' name='name'>
+                </label>
+            </div>
+            <div class='input-line' style='margin-bottom:11px;'>
+                <label for='input-birthday'>
+                    Дата Рождения
+                    <input id='input-birthday' type='text' name='birthday' placeholder='DD-MM-YYYY'>
+                </label>
+            </div>
+            <div class='input-line' style='margin-bottom:0px;'>
+                <label for='input-sex'>
+                    Пол
+                    <div class='radio-line'>
+                        <input type='radio' id='input-female' name='sex' value='female'>
+                        <label for='input-female'>Женский</label>
+                        <input type='radio' id='input-male' name='sex' value='male'>
+                        <label for='input-male'>Мужской</label>
+                    </div>
+                </label>
+            </div>
+            <button type='submit' style='margin-top: 14px;'>Продолжить</button>
+        </form>
+
+        <form method='post' class='register-box' id='step4' style='padding-top: 40px;
+    height: 367px;'>
+            {% csrf_token %}
+            <label for='input-password'>
+                Пароль
+                <input id='input-password' type='password' name='password' style='margin-bottom: 10px;'>
+            </label>
+            <label for='input-password2'>
+                Подтверждение пароля
+                <input id='input-password2' type='password' name='password2'>
+            </label>
+            <div style='display: flex; align-items: center; gap: 8px; margin-top: 26px;'>
+                <input type='checkbox' id='agree-checkbox' name='agree'>
+                <label for='agree-checkbox'>Согласие с Условиями использования и Политикой конфиденциальности</label>
+            </div>
+            <button type='submit' style='margin-top: 13px;'>Зарегестрироваться</button>
+            <p style='margin: 0; font-size: 16px; font-weight: 400; font-family: PTSans; color: rgba(95, 94, 94, 1);text-align: center;
+    margin-top: 5px;'>Уже есть аккаунт? <a href='/login'>Войдите</a></p>
+        </form>
+    </div>
+
+    <div style='display:none;'>
+        <button onclick='showForm(1);'>1</button>
+        <button onclick='showForm(2);'>2</button>
+        <button onclick='showForm(3);'>3</button>
+        <button onclick='showForm(4);'>4</button>
+    </div>
+    <div style='margin: 75px'></div>
+
+    <script>
+        function showForm(step) {
+            let block = 'step' + step;
+            console.log(block);
+            for(var i = 1; i <= 4; ++i) {
+                let temp = 'step' + i;
+                console.log(temp);
+                document.getElementById(temp).style.display = 'none';
+            }
+            document.getElementById(block).style.display = 'block';
+        }
+        showForm({{step}});
+
+
+        const inputs = document.querySelectorAll(".digit-input");
+        inputs.forEach((input, index) => {
+            input.addEventListener("input", (e) => {
+                const value = e.target.value;
+                if(!/^\d$/.test(value)) {
+                    e.target.value = "";
+                    return;
+                }
+                if(index < inputs.length - 1) {
+                    inputs[index+1].focus();
+                }
+                changeDisability();
+            });
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace") {
+                    if (!input.value && index > 0) {
+                        inputs[index - 1].focus();
+                    } else if(input.value) {
+                        e.preventDefault();
+                        for(let u = index + 1; u < inputs.length; ++u) {
+                            inputs[u - 1].value = inputs[u].value;
+                        }
+                        inputs[inputs.length - 1].value = '';
+                    }
+                } else if (e.key === "ArrowLeft" && index > 0) {
+                    inputs[index - 1].focus();
+                } else if (e.key === "ArrowRight" && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+                changeDisability();
+            });
+        
+            input.addEventListener("paste", (e) => {
+                const pasteData = e.clipboardData.getData("text");
+                if (/^\d{6}$/.test(pasteData)) {
+                    e.preventDefault();
+                    pasteData.split("").forEach((char, i) => {
+                        console.log(char, i);
+                        if (inputs[i]) {
+                            inputs[i].value = char;
+                        }
+                    });
+                    inputs[5].focus();
+                }
+                changeDisability();
+            });
+        });
+        function changeDisability() {
+            let btn = document.getElementById('step2-btn');
+            var cnt = 0;
+            inputs.forEach((input, index) => {
+                if( input.value !== '') {
+                    ++cnt;
+                }
+            });
+            if(cnt == inputs.length) {
+                btn.disabled = false;
+            } else {
+                btn.disabled = true;
+            }
+        }
+        document.getElementById('step2').addEventListener("submit", (e) => {
+            e.preventDefault();
+            let fullcode = "";
+            inputs.forEach((input) => {
+                if(input.value === '') {
+                    alert("Please complete all fields!");
+                    return;
+                } 
+                fullcode += input.value;
+            });
+            document.getElementById('full-code').value = fullcode;
+            e.target.submit();
+        });
+
+        document.getElementById("step3").addEventListener("submit", (e) => {
+            const dateInput = document.getElementById("input-birthday").value;
+            if (!isValidDate(dateInput)) {
+                e.preventDefault();
+                alert("Please enter a valid date in the format DD-MM-YYYY.");
+            }
+        });
+        function isValidDate(dateString) {
+            const regex = /^(\d{2})-(\d{2})-(\d{4})$/;
+            const match = dateString.match(regex);
+            if (!match) {
+                return false;
+            }
+            const day = parseInt(match[1], 10);
+            const month = parseInt(match[2], 10);
+            const year = parseInt(match[3], 10);
+            const date = new Date(year, month - 1, day);
+            return (
+                date.getFullYear() === year &&
+                date.getMonth() === month - 1 &&
+                date.getDate() === day
+            );
+        }
+
+        document.getElementById('step4').addEventListener('submit', (e) => {
+            let checkbox = document.getElementById('agree-checkbox');
+            if( !checkbox.checked) {
+                alert("Check the checkbox for registration")
+                e.preventDefault();
+                return;
+            }
+        });
+    </script>
+
+    <div class='footer'>
+        <div class='footer-left'>
+            <h1>CARE+</h1>
+            <p>Мы обеспечиваем качественный уход, позволяя вашим родным жить в комфортных условиях, не чувствуя себя забытыми.</p>
+        </div>
+        <div class='footer-middle'>
+            <h1>Свяжитесь с нами</h1>
+            <div class='middle-line'>
+                <img src="{% static 'images/email.png' %}">
+                <p>care.plus@website.com</p>
+            </div>
+            <div class='middle-line'>
+                <img src="{% static 'images/location.png' %}">
+                <p>Розыбакиева 221а, Алматы, Казахстан</p>
+            </div>
+            <div class='middle-line'>
+                <img src="{% static 'images/phone.png' %}">
+                <p>+7 777 777 77 77</p>
+            </div>
+        </div>
+        <div class='footer-right'>
+            <h1>Подписывайтесь!</h1>
+            <div class='right-line'>
+                <img src="{% static 'images/twitter.png' %}">
+                <img src="{% static 'images/instagram.png' %}">
+                <img src="{% static 'images/facebook.png' %}">
+                <img src="{% static 'images/youtube.png' %}">
+            </div>
+        </div>
+    </div>
+</body>

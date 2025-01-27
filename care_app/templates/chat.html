@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Чаты</title>
+        <link rel="stylesheet" href="{% static 'care_app/header.css' %}">
+        <link rel="stylesheet" href="{% static 'care_app/chats.css' %}">
+        <style>
+            @font-face {
+                font-family: 'PTSans';
+                src: url("{% static 'fonts/PTSans-Regular.ttf' %}") format('truetype');
+            } @font-face {
+                font-family: 'Roboto';
+                src: url("{% static 'fonts/Roboto-Regular.ttf' %}") format('truetype');
+            } @font-face {
+                font-family: 'Monsterrat';
+                src: url("{% static 'fonts/Montserrat-Regular.ttf' %}") format('truetype');
+            } .header {
+                border-bottom: none;
+            }
+        </style>
+    </head>
+<body>
+    {% include 'header.html' %}
+    <div class='content'>
+        <div class='links'>
+            <a href='/my_orders'>История заявок</a>
+            <a href='/chats' class='checked' disabled>Чат-поддержка</a>
+            <a href='/profile'>Настройки профиля</a>
+            <a href='/notifications'>Уведомления</a>
+            <a href='/logout'>Выйти</a>
+        </div>
+        <div class='block'>
+            <div class='vertical-line'></div>
+            <div class='top'>
+                <div class='search-container'><input type='text' class='search' placeholder='Поиск чатов'></div>
+                <div class='chat-info'>
+                    <img src="{%if companion.profile_picture%}{{companion.profile_picture.url}}{%endif%}" onerror="this.src='{% static 'images/fallback.png' %}'">
+                    <p>{{companion.name}} {{companion.surname}}</p>
+                </div>
+            </div>
+            <div style='display:flex;'>
+            <div class='left'>
+                {% for chat in chats %}
+                    {% if forloop_counter > 0 %}
+                    <div class='horizontal'></div>
+                    {% endif %}
+                    <a style='text-decoration:none; color:inherit;' href='/chat/{{chat.chat.id}}'><div class='chat'>
+                        <img src="{%if chat.other_user.profile_picture%}{{ chat.other_user.profile_picture.url }}{%endif%}" alt="{{ other_user.username }}" onerror="this.src='{% static 'images/fallback.png' %}'">
+                        <div style='display:flex;'>
+                            <p>{{ chat.other_user.name }}</p>
+                            <p>{{ chat.chat.last_message.created_at|date:"d.m.Y" }}</p>
+                        </div>
+                    </div></a>
+                {% endfor %}
+            </div>
+            <div class='right'>
+                <div class='messages' id='messages'>
+                    {% for message in messages %}
+                        {% if message.sender == request.user %}
+                        <div class="message message-sent">
+                            <p>{{ message.text }}</p>
+                            {% if message.file %}
+                                <img src="{{ message.file.url }}" alt="Sent File">
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <div class="message message-received">
+                            <p>{{ message.text }}</p>
+                            {% if message.file %}
+                                <img src="{{ message.file.url }}" alt="Received File">
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <form id='form' method='post' enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class='input'>
+                    <img src="{% static 'images/add-file.png' %}" class='add' onclick='add();'>
+                    <input type='file' accept='image/*' id='file-input' style='display:none;' name='file'>
+                    <div class='inputline'>
+                        <img src="{%static 'images/smile.png'%}">
+                        <input type='text' placeholder='Добрый день!' id='text' name='text'>
+                    </div>
+                    <button type='submit' style='background-color: inherit; border:none;'>
+                        <img src="{% static 'images/send.png' %}" class='send'></button>
+                </div></form>
+            </div></div>
+        </div>
+    </div>
+    <script>
+        const messageForm = document.getElementById('form');
+        const messageInput = document.getElementById('text');
+        const fileInput = document.getElementById('file-input');
+        const messagesBlock = document.getElementById('messages');
+    
+        messageForm.addEventListener('submit', async (e) => {
+            console.log("LOH");
+            e.preventDefault();
+    
+            const formData = new FormData();
+            formData.append('text', messageInput.value);
+            if (fileInput && fileInput.files[0]) {
+                formData.append('file', fileInput.files[0]);
+            }
+
+            const response = await fetch(`/chat/{{ current.id }}/send/`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+            });
+            console.log(response);
+    
+            const data = await response.json();
+            if (data.status === 'ok') {
+                const newMessage = document.createElement('div');
+                newMessage.classList.add('message', 'message-sent');
+                newMessage.innerHTML = `
+                    <p>${messageInput.value}</p>
+                    ${fileInput.files[0] ? `<img src="${URL.createObjectURL(fileInput.files[0])}" alt="File">` : ''}
+                `;
+                messagesBlock.appendChild(newMessage);
+    
+                messageInput.value = '';
+                fileInput.value = '';
+            } else {
+                alert(data.message || 'Failed to send message');
+            }
+        });
+        function add() {
+            fileInput.click();
+        }
+    </script>
+    
+
+    <div style='margin:200px'></div>
+    {% include 'footer.html' %}
+</body>
+</html>

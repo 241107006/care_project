@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создать заказ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'care_app/header.css' %}">
+    <style>
+        @font-face {
+            font-family: 'PTSans';
+            src: url("{% static 'fonts/PTSans-Regular.ttf' %}") format('truetype');
+        } @font-face {
+            font-family: 'Roboto';
+            src: url("{% static 'fonts/Roboto-Regular.ttf' %}") format('truetype');
+        } @font-face {
+            font-family: 'Monsterrat';
+            src: url("{% static 'fonts/Montserrat-Regular.ttf' %}") format('truetype');
+        }
+    </style>
+    <script>
+        function showOtherInput(selectElement, inputId) {
+            var otherInput = document.getElementById(inputId);
+            if (selectElement.value === 'Другое') {
+                otherInput.style.display = 'block';
+            } else {
+                otherInput.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container mt-5">
+        <h1>Создать заказ</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Опубликовать заказ</button>
+        </form>
+    </div>
+    <div style='margin:100px;'></div>
+    {% include 'footer.html' %}
+    {% if task_name %}
+    <script>
+        const task_name = '{{task_name}}';
+        const option = document.querySelector('option[value="Другое"]');
+        const other = document.getElementById("other_task_name_input");
+        other.value = task_name;
+        option.selected = true;
+        const select = option.parentElement;
+        if (select) {
+            select.dispatchEvent(new Event('change'));
+        }
+    </script>
+    {% endif %}
+</body> 
+</html>

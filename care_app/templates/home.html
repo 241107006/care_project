@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Главная</title>
+        <style>
+            @font-face {
+                font-family: 'PTSans';
+                src: url("{% static 'fonts/PTSans-Regular.ttf' %}") format('truetype');
+            } @font-face {
+                font-family: 'Roboto';
+                src: url("{% static 'fonts/Roboto-Regular.ttf' %}") format('truetype');
+            } @font-face {
+                font-family: 'Monsterrat';
+                src: url("{% static 'fonts/Montserrat-Regular.ttf' %}") format('truetype');
+            }
+        </style>
+        <link rel="stylesheet" href="{% static 'care_app/header.css' %}">
+        <link rel="stylesheet" href="{% static 'care_app/home.css' %}">
+    </head>
+<body>
+    {% include 'header.html' %}
+    <div class='content'>
+        <div class='first-block'>
+            <h1 style='margin-top: 72px;margin-bottom: 0;font-size: 67px;font-weight: 600;font-family: Monsterrat;color: black;'>Забота, которая <span style='color:rgba(135, 220, 223, 1);'>рядом</span></h1>
+            <h2 style='font-size: 20px;font-weight: 500;font-family: Monsterrat;margin-bottom: 42px;'>Помощь вашим близким с уходом, медициной, бытом и другим задачам</h2>
+            <div style='display:flex;gap: 10px;'>
+                <input type='text' id='taskInput' placeholder='Услуга или специалист' style='width: 910px;height: 65px;border: none;outline: none;background-color: rgba(217, 217, 217, 0.74);border-radius: 13px;padding-left: 19px;font-size: 20px;font-family: Monsterrat;font-weight: 500;'>
+                <button class='search' id='searchButton'>Найти</button>
+            </div>
+            <div style='display:flex;margin-top: 16px;gap: 18px;'>
+                <a href='/create_order?task_name=Уборка дома'><button class='search-class'>Уборка дома</button></a>
+                <a href='/create_order?task_name=Приготовление пищи'><button class='search-class'>Приготовление пищи</button></a>
+                <a href='/create_order?task_name=Медицинский уход'><button class='search-class'>Медицинский уход</button></a>
+            </div>
+            <div style='display:flex;margin-top: 102px;gap: 21px;' class='imagess'>
+                <a href='/create_order?task_name=Медицинский уход'><div class='image'>
+                    <img src="{% static 'images/first1.png' %}">
+                    <p>Медицинский уход</p>
+                </div></a>
+                <a href='/create_order?task_name=Приготовление пищи'><div class='image'>
+                    <img src="{% static 'images/first2.png' %}">
+                    <p>Приготовление пищи</p>
+                </div></a>
+                <a href='/create_order?task_name=Уборка дома'><div class='image'>
+                    <img src="{% static 'images/first3.png' %}">
+                    <p>Уборка дома</p>
+                </div></a>
+                <a href='/create_order?task_name=Массаж'><div class='image'>
+                    <img src="{% static 'images/first4.png' %}">
+                    <p>Массаж</p>
+                </div></a>
+            </div>
+            <script>
+                document.getElementById('searchButton').addEventListener('click', function () {
+                    const input = document.getElementById('taskInput');
+                    const taskValue = input.value.trim();
+                    if (taskValue) {
+                        window.location.href = `/create_order?task_name=${encodeURIComponent(taskValue)}`;
+                    } else {
+                        alert('Введите значение перед поиском!');
+                    }
+                });
+            </script>
+        </div>
+
+        <div class='second-block'>
+            <div style='display:flex;'>
+                <div style='width: 830px;'>
+                    <h1 style='font-weight: 600;font-size: 67px;'>Забота, которая приносит <span style='color:rgba(135, 220, 223, 1);'>комфорт</span> и <span style='color:rgba(135, 220, 223, 1);'>спокойствие</span></h1>
+                    <h2 style='color: rgba(82, 82, 82, 1);font-size: 48px;font-weight: 500;'>Как это работает?</h2></div>
+                <img src="{% static 'images/second1.png' %}" style='height: 300px;'>
+            </div>
+            <div style='display:flex; margin-top: 30px; gap: 38px;'>
+                <div class='second-item'>
+                    <img src="{% static 'images/second2.png' %}">
+                    <h2>Оставьте <span style='color:rgba(135, 220, 223, 1);'>Заказ</span></h2>
+                    <p>Мы зададим все важные вопросы, чтобы вам было проще описать задачу</p>
+                </div>
+                <div class='second-item'>
+                    <img src="{% static 'images/second3.png' %}">
+                    <h2>Специалисты <span style='color:rgba(135, 220, 223, 1);'>напишут САМИ</span></h2>
+                    <p>Покажем заказ подходящим специалистам. Они напишут, если готовы помочь.</p>
+                </div>
+                <div class='second-item'>
+                    <img src="{% static 'images/second2.png' %}">
+                    <h2>Выберите <span style='color:rgba(135, 220, 223, 1);'>Подходящего</span></h2>
+                    <p>Обо всех деталях договаривайтесь со специалистом и платите ему напрямую</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div style='margin:200px'></div>
+    {% include 'footer.html' %}
+</body>
+</html>

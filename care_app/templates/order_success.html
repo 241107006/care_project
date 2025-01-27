@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказ успешно создан</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            margin: 80px;
+            color: #333;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        h2{
+            margin: 10px 0;
+        }
+        p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+        .order-details {
+            padding: 15px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Ваш заказ успешно создан!</h1>
+    <div class="order-details">
+        <p><strong>Название задачи:</strong> {{ order.task_name }}</p>
+        <p><strong>Мобильность клиента:</strong> {{ order.mobility }}</p>
+        <p><strong>Возраст клиента:</strong> {{ order.age }} лет</p>
+        <p><strong>Номер телефона:</strong> {{ order.phone }}</p>
+        <p><strong>Имя и фамилия:</strong> {{ order.full_name }}</p>
+    </div>
+
+    <h2>Спасибо за ваш заказ!</h2>
+    <p>С вами свяжутся в ближайшее время для уточнения деталей.</p>
+    <a href="{% url 'my_orders' %}" class="btn btn-primary">Посмотреть мои заказы</a>
+
+</body>
+</html>
