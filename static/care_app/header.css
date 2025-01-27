@@ -1,0 +1,124 @@
+.header {
+    font-family: Monsterrat;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 128px;
+    width: 100%;
+    border-bottom: 1px solid rgba(191, 190, 190, 1);
+}
+.header-logo {
+    color: rgba(135, 220, 223, 1);
+    font-weight: 600;
+    font-size: 38px;
+    margin-left: 98px;
+    margin-right: 59.33px;
+    cursor: pointer;
+}
+.header-text {
+    font-weight: 600;
+    font-size: 16px;
+    margin-right: 25px;
+    cursor: pointer;
+}
+.header-client {
+    background-color: rgba(27, 31, 38, 1);
+    color: white;
+    font-weight: 600;
+    font-size: 21px;
+    height: 56px;
+    width: 294px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 66.33px;
+    margin-right: 72px;
+    border-radius: 100px;
+    cursor: pointer;
+}
+.header-spec {
+    color: rgba(27, 31, 38, 0.72);
+    font-weight: 600;
+    font-size: 21px;
+    text-align: center;
+    cursor: pointer;
+}
+.header-guest {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(27, 31, 38, 0.72);
+    margin-left: 99.33px;
+    gap: 8px;
+    cursor: pointer;
+}
+
+
+.footer {
+    width: 100%;
+    height: 320px;
+    padding-top: 106px;
+    background-color: rgba(156, 208, 210, 1);
+    font-family: Monsterrat;
+    display: flex;
+}
+.footer-left {
+    margin-left: 98px;
+    width: 271px;
+}
+.footer-left h1 {
+    color: white;
+    font-weight: 600;
+    font-size: 38px;
+}
+.footer-left p {
+    margin-top: 25px;
+    font-weight: 500;
+    font-size: 16px;
+    color: rgba(169, 147, 147, 1);
+    word-wrap: break-word;
+}
+.footer-middle {
+    margin-left: 232px;
+    width: 293px;
+}
+.footer-middle h1 {
+    color: white;
+    font-weight: 600;
+    font-size: 21px;
+    margin-bottom: 25px
+}
+.middle-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px
+}
+.middle-line img {
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+}
+.middle-line p {
+    margin: 0px;
+    word-wrap: break-word;
+    color: rgba(118, 105, 105, 1);
+}
+.footer-right {
+    margin-left: 232px;
+    width: 256px;
+}
+.footer-right h1 {
+    color: white;
+    font-weight: 600;
+    font-size: 21px;
+}
+.right-line {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+}
+.right-line img {
+    width: 40px;
+    height: 40px;
+}

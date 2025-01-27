@@ -1,0 +1,88 @@
+body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+}
+h1{
+    margin: 40px 80px;
+}
+.content {
+    font-family: Roboto;
+    margin-top: 50px;
+}
+.order-list {
+    list-style: none;
+    padding: 0;
+    margin: 80px;
+}
+.order-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+.order-details {
+    padding: 15px;
+    width: 60%;
+    overflow-x: scroll;
+    margin-left: 60px;
+}
+.order-details h3 {
+    font-size: 22px;
+}
+.order-details p {
+    font-size: 18px;
+}
+.order-details::-webkit-scrollbar {
+    display: none;
+}
+.accept {
+    background-color: rgb(27, 31, 38);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    width: 294px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+}
+.return {
+    background-color: rgb(27, 31, 38);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    width: 294px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+}
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 3px;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+.btn-secondary {
+    margin-left: 80%;
+    color: green;
+    background-color: #007bff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 3px;
+}
+.btn-secondary:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,60 @@
+body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+}
+.content {
+    margin-left: 118px;
+    /* width: calc(100% - 118px); */
+}
+.search {
+    border: 0;
+    background-color: rgba(165, 228, 231, 1);
+    width: 220px;
+    height: 65px;
+    border-radius: 13px;
+    font-size: 20px;
+    font-family: Monsterrat;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+}
+.search-class {
+    padding: 0 24px;
+    background-color: rgba(216, 221, 217, 1);
+    height: 49px;
+    border-radius: 28px;
+    border: 0;
+    cursor: pointer;
+}
+.imagess a {
+    text-decoration: none;
+    color: inherit;
+}
+.image {
+    cursor: pointer;
+}
+.image p {
+    font-weight: 500;
+    font-size: 22px;
+    font-family: Monsterrat;
+}
+.second-block {
+    font-family: Monsterrat;
+    margin-top: 187px;
+}
+.second-item {
+    box-shadow: 4px 5px 10px rgba(120, 120, 120, 0.4);
+    border-radius: 16px;
+    width: 280px;
+    padding: 58px 27px 40px;
+}
+.second-item h2 {
+    font-weight: 600;
+    font-size: 28px;
+}
+.second-item p {
+    color: rgba(82, 82, 82, 1);
+    font-size: 16px;
+    font-weight: 500;
+}

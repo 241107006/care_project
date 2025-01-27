@@ -1,0 +1,123 @@
+body {
+    background-color: rgba(251, 251, 251, 1);
+    margin: 0;
+    padding: 0;
+    font-family: 'Monsterrat';
+}
+p {
+}
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'PTSans';
+}
+.content-name {
+    font-weight: 700;
+    font-size: 40px;
+    margin: 39px 0 0 0;
+}
+.content-step {
+    font-weight: 400;
+    font-size: 24px;
+    color: rgba(148, 148, 148, 1);
+    margin: 7px 0 0 0;
+}
+.register-box {
+    width: 533px;
+    height: 337px;
+    border: 1px solid rgba(191, 190, 190, 1);
+    border-radius: 16px;
+    font-family: 'Roboto';
+    margin: 23px 0 0;
+    padding-top: 60px;
+}
+.input-line {
+    width: 100%;
+    margin-bottom: 23px;
+}
+.register-box label {
+    font-weight: 400;
+    font-size: 24px;
+    margin-left: 56px;
+    color: rgba(95, 94, 94, 1);
+}
+.register-box input {
+    display: flex;
+    align-items: center;
+    width: 415px;
+    height: 60px;
+    border: 1px solid rgba(191, 190, 190, 1);
+    border-radius: 16px;
+    margin-left: 48px;
+    padding-left: 33px;
+    font-size: 20px;
+}
+.register-box label label {
+    margin: 0;
+}
+.register-box input[type='radio'] {
+    height: 23px;
+    width: 23px;
+    background-color: rgba(217, 217, 217, 1);
+    border: 0;
+    margin-left: 115px;
+}
+.radio-line {
+    display: flex;
+    margin-left: -38px;
+}
+.register-box button {
+    width: 448px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(75, 86, 85, 1);
+    color: white;
+    border-radius: 16px;
+    border: 0;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 48px 48px 0;
+    cursor: pointer;
+}
+.register-box button:disabled {
+    background-color: rgba(75, 86, 85, 0.5);
+    cursor: default;
+}
+.sms-code {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin: 20px;
+}
+.sms-code input {
+    width: 52px;
+    height: 60px;
+    text-align: center;
+    font-size: 24px;
+    border: 0;
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    padding: 0;
+    margin: 0;
+    background-color: rgba(244, 245, 246, 1);
+}
+.sms-code input:focus {
+    border: 1px solid rgba(110, 117, 124, 1);
+}
+input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid rgba(191, 190, 190, 1);
+}
+label[for='agree-checkbox'] {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: PTSans;
+}
