@@ -17,8 +17,10 @@ COPY . /app/
 
 EXPOSE 8000
 
-RUN mkdir -p /app/staticfiles
+RUN mkdir -p /app/static
 
 RUN python manage.py collectstatic --noinput
+
+RUN chmod -R 755 /app/static /app/staticfiles
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

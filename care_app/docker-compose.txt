@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   web:
     image: almas200103395/care_app:latest
@@ -5,6 +7,8 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+      - ./static:/app/static
+      - ./staticfiles:/app/staticfiles
     working_dir: /app
     environment:
       - DJANGO_SETTINGS_MODULE=care_project.settings
@@ -19,6 +23,7 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+      - ./static:/app/static
       - ./staticfiles:/app/staticfiles
     environment:
       - DJANGO_SETTINGS_MODULE=care_project.settings
