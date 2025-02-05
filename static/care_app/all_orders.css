@@ -86,3 +86,129 @@ h1{
 .btn-secondary:hover {
     background-color: #0056b3;
 }
+
+
+/* Tablets (1024px and below) */
+@media screen and (max-width: 1024px) {
+    h1 {
+        margin: 30px 50px;
+    }
+
+    .order-list {
+        margin: 50px;
+    }
+
+    .order-details {
+        width: 80%;
+        margin-left: 30px;
+    }
+
+    .btn-secondary {
+        margin-left: 70%;
+    }
+}
+
+/* Small Tablets & Large Phones (768px and below) */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 28px;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .content {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .order-list {
+        margin: 30px;
+        padding: 0;
+    }
+
+    .order-item {
+        padding: 12px;
+    }
+
+    .order-details {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .accept, .return {
+        width: 90%;
+    }
+
+    .btn-secondary {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Small Phones (480px and below) */
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .order-list {
+        margin: 20px;
+    }
+
+    .order-item {
+        padding: 10px;
+    }
+
+    .order-details {
+        width: 90%;
+        margin-left: 0;
+        padding: 5%;
+    }
+
+    .order-details h3 {
+        font-size: 18px;
+    }
+
+    .order-details p {
+        font-size: 16px;
+    }
+
+    .accept, .return {
+        width: 100%;
+        height: 50px;
+    }
+}
+
+/* Extra Small Phones (360px and below) */
+@media screen and (max-width: 360px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    .order-list {
+        margin: 10px;
+    }
+
+    .order-item {
+        padding: 8px;
+    }
+
+    .order-details h3 {
+        font-size: 16px;
+    }
+
+    .order-details p {
+        font-size: 14px;
+    }
+
+    .accept, .return {
+        width: 100%;
+        height: 45px;
+    }
+}

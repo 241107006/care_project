@@ -139,3 +139,204 @@ select {
     width: 50px;
     cursor: pointer;
 }
+
+/* 1440px - Large screens */
+@media screen and (max-width: 1440px) {
+    .content {
+        gap: 20px;
+    }
+    .profile {
+        width: 800px;
+    }
+    .pfp img {
+        margin-left: 80px;
+    }
+    .profile form {
+        margin-left: 80px;
+        margin-bottom: 20px;
+    }
+}
+
+/* 1024px - Tablets landscape */
+@media screen and (max-width: 1024px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+    }
+    
+    .links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 8px;
+    }
+    
+    .links a {
+        width: auto;
+        padding: 0 15px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .checked {
+        width: auto;
+        padding: 0 20px;
+    }
+    
+    .profile {
+        width: 90%;
+        height: auto;
+        padding-bottom: 30px;
+    }
+    
+    .pfp {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .pfp img {
+        margin: 15px 0 0 0;
+    }
+    
+    .pfp div {
+        margin: 20px 0 0 0;
+    }
+    
+    .profile form {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    
+    .top {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+}
+
+/* 768px - Tablets portrait */
+@media screen and (max-width: 768px) {
+    .profile {
+        width: 95%;
+    }
+    
+    .pfp img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .pfp h1 {
+        font-size: 20px;
+    }
+    
+    .pfp p {
+        font-size: 16px;
+    }
+    
+    .top {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    input, select {
+        width: 90%;
+    }
+    
+    .nottop p {
+        font-size: 18px;
+    }
+    
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .buttons button,
+    .buttons a {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* 480px - Mobile landscape */
+@media screen and (max-width: 480px) {
+    .content {
+        margin-top: 20px;
+    }
+    
+    .links a {
+        font-size: 16px;
+        padding: 0 10px;
+    }
+    
+    .pfp img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .pfp h1 {
+        font-size: 18px;
+    }
+    
+    .pfp p {
+        font-size: 14px;
+    }
+    
+    .nottop p {
+        font-size: 16px;
+    }
+    
+    input, select {
+        height: 30px;
+        font-size: 14px;
+    }
+    
+    .upload {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* 360px - Mobile portrait */
+@media screen and (max-width: 360px) {
+    .links a {
+        font-size: 14px;
+    }
+    
+    .profile {
+        width: 100%;
+        border-radius: 0;
+    }
+    
+    .pfp img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .pfp h1 {
+        font-size: 16px;
+    }
+    
+    .pfp p {
+        font-size: 12px;
+    }
+    
+    .nottop p {
+        font-size: 14px;
+        margin: 12px 0;
+    }
+    
+    .buttons button,
+    .buttons a {
+        height: 35px;
+        font-size: 13px;
+    }
+    
+    .upload {
+        width: 35px;
+        height: 35px;
+    }
+}

@@ -121,3 +121,85 @@ label[for='agree-checkbox'] {
     font-weight: 400;
     font-family: PTSans;
 }
+
+@media screen and (max-width: 1024px) {
+    .register-box {
+        width: 80%;
+    }
+
+    .register-box input {
+        width: 90%;
+    }
+}
+
+/* Small tablets and large phones (768px and below) */
+@media screen and (max-width: 768px) {
+    .content-name {
+        font-size: 32px;
+    }
+
+    .register-box {
+        width: 90%;
+        padding-top: 40px;
+    }
+
+    .register-box input {
+        width: 85%;
+        height: 50px;
+        font-size: 18px;
+    }
+
+    .register-box button {
+        width: 85%;
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
+/* Small phones (480px and below) */
+@media screen and (max-width: 480px) {
+    .content-name {
+        font-size: 28px;
+    }
+
+    .register-box {
+        width: 95%;
+        padding-top: 30px;
+    }
+
+    .register-box input {
+        width: 70%;
+        height: 45px;
+        font-size: 16px;
+    }
+
+    .register-box button {
+        width: 80%;
+        height: 45px;
+        font-size: 18px;
+    }
+}
+
+/* Extra small phones (360px and below) */
+@media screen and (max-width: 360px) {
+    .content-name {
+        font-size: 24px;
+    }
+
+    .register-box {
+        width: 100%;
+        padding-top: 20px;
+    }
+
+    .register-box input {
+        width: 60%;
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .register-box button {
+        width: 75%;
+        height: 40px;
+        font-size: 16px;
+    }
+}

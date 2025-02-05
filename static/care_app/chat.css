@@ -245,6 +245,9 @@ h1.nochats {
     .inputline {
         width: 420px;
     }
+    #margins {
+        margin: 200px;
+    }
 }
 
 /* 1024px - Tablets landscape */
@@ -347,6 +350,9 @@ h1.nochats {
     .message {
         max-width: 80%;
     }
+    #margins {
+        margin: 100px;
+    }
 }
 
 /* 480px - Mobile landscape */
@@ -391,10 +397,19 @@ h1.nochats {
         padding: 8px;
     }
     .right {
+        width: 100%;
+    }
+    .left, .search-container {
         display: none;
     }
-    .left {
-        width: 100%;
+    .chat-info {
+        justify-content: start;
+    }
+    #margins {
+        margin: 0;
+    }
+    .top {
+        border-top: rgba(191, 190, 190, 1) 1px solid;
     }
 }
 

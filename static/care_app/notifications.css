@@ -106,3 +106,180 @@ body {
     font-size: 20px;
     font-family: PTSans;
 }
+
+/* 1440px - Large screens */
+@media screen and (max-width: 1440px) {
+    .content {
+        gap: 20px;
+    }
+    .block {
+        width: 800px;
+    }
+    .texts {
+        margin-left: 150px;
+    }
+}
+
+/* 1024px - Tablets landscape */
+@media screen and (max-width: 1024px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+    }
+    
+    .links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 8px;
+    }
+    
+    .links a {
+        width: auto;
+        padding: 0 15px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .checked {
+        width: auto;
+        padding: 0 20px;
+    }
+    
+    .block {
+        width: 90%;
+        height: 70vh;
+    }
+    
+    .texts {
+        margin-left: 50px;
+    }
+    
+    .notification {
+        gap: 50px;
+    }
+}
+
+/* 768px - Tablets portrait */
+@media screen and (max-width: 768px) {
+    .block {
+        width: 95%;
+    }
+    
+    .top p {
+        font-size: 20px;
+        margin-left: 20px;
+    }
+    
+    .texts {
+        margin-left: 30px;
+        margin-top: 15px;
+    }
+    
+    .notification {
+        height: auto;
+        padding: 15px 0;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .action {
+        margin-right: 30px;
+        align-self: flex-start;
+        margin-left: 30px;
+    }
+    
+    .horizontal div {
+        width: 92%;
+    }
+}
+
+/* 480px - Mobile landscape */
+@media screen and (max-width: 480px) {
+    .content {
+        margin-top: 20px;
+    }
+    
+    .links a {
+        font-size: 16px;
+        padding: 0 10px;
+    }
+    
+    .block {
+        width: 95%;
+        height: 60vh;
+    }
+    
+    .top {
+        height: 70px;
+    }
+    
+    .top p {
+        font-size: 18px;
+    }
+    
+    .texts {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    
+    .not-top {
+        font-size: 18px;
+    }
+    
+    .not-bot {
+        font-size: 16px;
+    }
+    
+    .action {
+        width: 130px;
+        height: 35px;
+        font-size: 16px;
+    }
+    
+    .horizontal div {
+        width: 90%;
+    }
+}
+
+/* 360px - Mobile portrait */
+@media screen and (max-width: 360px) {
+    .links a {
+        font-size: 14px;
+    }
+    
+    .block {
+        width: 100%;
+        border-radius: 0;
+    }
+    
+    .top p {
+        font-size: 16px;
+        margin-left: 15px;
+    }
+    
+    .texts {
+        margin-left: 15px;
+    }
+    
+    .not-top {
+        font-size: 16px;
+    }
+    
+    .not-bot {
+        font-size: 14px;
+    }
+    
+    .action {
+        width: 120px;
+        height: 30px;
+        font-size: 14px;
+        margin-right: 15px;
+    }
+    
+    .horizontal div {
+        width: 95%;
+    }
+}

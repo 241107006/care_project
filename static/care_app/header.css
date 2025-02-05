@@ -1,11 +1,16 @@
 .header {
     font-family: Monsterrat;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     height: 128px;
     width: 100%;
     border-bottom: 1px solid rgba(191, 190, 190, 1);
+    display: flex;
+    align-items: center;
+}
+.header-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
 }
 .header-logo {
     color: rgba(135, 220, 223, 1);
@@ -121,4 +126,354 @@
 .right-line img {
     width: 40px;
     height: 40px;
+}
+
+
+
+.footer {
+    width: 100%;
+    padding: 106px 0;
+    background-color: rgba(156, 208, 210, 1);
+    font-family: Monsterrat;
+}
+
+.footer-content {
+    max-width: 1920px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-left,
+.footer-middle,
+.footer-right {
+    flex: 1;
+    max-width: 350px;
+}
+
+.footer-left h1 {
+    color: white;
+    font-weight: 600;
+    font-size: 38px;
+    margin-bottom: 25px;
+}
+
+.footer-left p {
+    font-weight: 500;
+    font-size: 16px;
+    color: rgba(169, 147, 147, 1);
+    line-height: 1.5;
+}
+
+.footer-middle h1,
+.footer-right h1 {
+    color: white;
+    font-weight: 600;
+    font-size: 21px;
+    margin-bottom: 25px;
+}
+
+.middle-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.middle-line img {
+    height: 16px;
+    width: 16px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.middle-line p {
+    margin: 0;
+    color: rgba(118, 105, 105, 1);
+    font-size: 14px;
+}
+
+.right-line {
+    display: flex;
+    gap: 24px;
+}
+
+.right-line img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.right-line img:hover {
+    transform: scale(1.1);
+}
+
+
+@media screen and (max-width: 1440px) {
+    .header-logo {
+        font-size: 32px;
+        margin-left: 50px;
+        margin-right: 40px;
+    }
+    
+    .header-client {
+        font-size: 18px;
+        width: 250px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+    
+    .header-spec,
+    .header-guest {
+        font-size: 18px;
+    }
+    
+    .footer {
+        padding-top: 80px;
+    }
+    
+    .footer-left {
+        margin-left: 50px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .header {
+        height: 100px;
+    }
+    
+    .header-logo {
+        font-size: 28px;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+    
+    .header-text {
+        font-size: 14px;
+        margin-right: 15px;
+    }
+    
+    .header-client {
+        font-size: 16px;
+        width: 220px;
+        height: 48px;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+    
+    .header-spec {
+        font-size: 16px;
+    }
+    
+    .header-guest {
+        font-size: 14px;
+        margin-left: 50px;
+    }
+    
+    .footer {
+        padding-top: 60px;
+        height: 280px;
+    }
+    
+    .footer-left,
+    .footer-middle,
+    .footer-right {
+        margin-left: 30px;
+    }
+    
+    .footer-left h1 {
+        font-size: 32px;
+    }
+
+    
+    .footer-content {
+        padding: 0 50px;
+    }
+    
+    .footer-left h1 {
+        font-size: 32px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        height: 80px;
+        padding: 0 5%;
+        width: 90%;
+        justify-content: space-between;
+    }
+    
+    .header-logo {
+        font-size: 24px;
+        margin-left: 0;
+        margin-right: 15px;
+    }
+    
+    .header-text {
+        display: none; /* Hide text links on mobile */
+    }
+    
+    .header-client {
+        font-size: 14px;
+        width: 180px;
+        height: 40px;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    
+    .header-spec {
+        font-size: 14px;
+    }
+    
+    .header-guest {
+        font-size: 12px;
+        margin-left: 20px;
+    }
+    
+    .footer {
+        flex-direction: column;
+        height: auto;
+        padding: 40px 5vw;
+        width: 90vw;
+    }
+    
+    .footer-left,
+    .footer-middle,
+    .footer-right {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 30px;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .footer-left h1 {
+        font-size: 28px;
+    }
+    
+    .footer-middle h1,
+    .footer-right h1 {
+        font-size: 18px;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        padding: 0 30px;
+        gap: 40px;
+    }
+    
+    .right-line {
+        justify-content: flex-start;
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+    .footer {
+        padding: 40px 5%;
+        width: 90%;
+    }
+    
+    .footer-content {
+        padding: 0 20px;
+        gap: 30px;
+    }
+    
+    .footer-left h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+    
+    .footer-left p {
+        font-size: 14px;
+    }
+    
+    .footer-middle h1,
+    .footer-right h1 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .middle-line img {
+        height: 14px;
+        width: 14px;
+    }
+    
+    .middle-line p {
+        font-size: 12px;
+    }
+    
+    .right-line {
+        gap: 16px;
+    }
+    
+    .right-line img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .header {
+        height: 70px;
+        padding: 0 3%;
+    }
+    
+    .header-logo {
+        font-size: 20px;
+        margin-right: 2%;
+    }
+    
+    .header-client {
+        font-size: 12px;
+        height: 40px;
+        width: 120px;
+        padding: 0 5%;
+    }
+    
+    .header-guest {
+        font-size: 12px;
+        margin-left: 2%;
+        gap: 6px;
+    }
+    
+    .header-guest img {
+        width: 18px;
+    }
+}
+
+/* Ultra-small screens (less than 360px) */
+@media screen and (max-width: 360px) {
+    .footer-content {
+        padding: 0 15px;
+    }
+    
+    .footer-left h1 {
+        font-size: 22px;
+    }
+    
+    .footer-left p {
+        font-size: 13px;
+    }
+    
+    .middle-line {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    
+    .right-line {
+        gap: 12px;
+    }
+    
+    .right-line img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .header {
+        height: 60px;
+        padding: 0 2%;
+    }
+    
+    .header-logo {
+        font-size: 18px;
+        margin-right: 1
+    }
 }

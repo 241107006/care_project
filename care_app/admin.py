@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.apps import apps
 from .models import Order
 
 admin.site.register(Order)
@@ -26,3 +27,10 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+models = apps.get_models()
+for model in models:
+    try:
+        admin.site.register(model)
+    except admin.sites.AlreadyRegistered:
+        pass
