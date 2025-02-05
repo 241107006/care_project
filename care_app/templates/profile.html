@@ -32,7 +32,7 @@
             <a href='/notifications'>Уведомления</a>
             <a href='/logout'>Выйти</a>
         </div>
-        <div class='profile' {% if request.user.document %} style='height: 883px;' {% endif %}>
+        <div class='profile' {% if request.user.document %} style='height: auto;' {% endif %}>
             <div class='pfp'>
                 {% if user.profile_picture %}
                 <img id='photo' src="{{request.user.profile_picture.url}}">

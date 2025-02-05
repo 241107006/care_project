@@ -115,3 +115,177 @@ body {
 p.data {
     font-size: 20px;
 }
+
+/* 1440px - Large screens */
+@media screen and (max-width: 1440px) {
+    .content {
+        gap: 20px;
+    }
+    .block {
+        width: 800px;
+    }
+}
+
+/* 1024px - Tablets landscape */
+@media screen and (max-width: 1024px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+    }
+    
+    .links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 8px;
+    }
+    
+    .links a {
+        width: auto;
+        padding: 0 15px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .checked {
+        width: auto;
+        padding: 0 20px;
+    }
+    
+    .block {
+        width: 90%;
+        height: 500px;
+    }
+    
+    .texts {
+        margin-left: 40px;
+        width: 60%;
+    }
+}
+
+/* 768px - Tablets portrait */
+@media screen and (max-width: 768px) {
+    .top p {
+        font-size: 20px;
+    }
+    
+    .order {
+        height: 100px;
+    }
+    
+    .texts {
+        margin-left: 30px;
+        width: 70%;
+    }
+    
+    .not-top {
+        font-size: 20px;
+    }
+    
+    .not-bot {
+        font-size: 16px;
+    }
+    
+    .dates p.data {
+        font-size: 18px;
+    }
+    
+    .horizontal div {
+        width: 85%;
+    }
+}
+
+/* 480px - Mobile landscape */
+@media screen and (max-width: 480px) {
+    .content {
+        margin-top: 20px;
+    }
+    
+    .links a {
+        font-size: 16px;
+        height: 35px;
+    }
+    
+    .block {
+        width: 95%;
+        height: 400px;
+    }
+    
+    .top {
+        height: 70px;
+    }
+    
+    .top p {
+        margin-left: 20px;
+        font-size: 18px;
+    }
+    
+    .texts {
+        margin-left: 20px;
+        width: 65%;
+    }
+    
+    .not-top {
+        font-size: 18px;
+    }
+    
+    .dates {
+        margin-left: 10px;
+    }
+    
+    .dates p.data {
+        font-size: 16px;
+    }
+    
+    .horizontal div {
+        width: 90%;
+    }
+}
+
+/* 360px - Mobile portrait */
+@media screen and (max-width: 360px) {
+    .links a {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+    
+    .block {
+        width: 100%;
+        border-radius: 0;
+    }
+    
+    .top p {
+        font-size: 16px;
+    }
+    
+    .texts {
+        margin-left: 15px;
+        width: 60%;
+    }
+    
+    .not-top {
+        font-size: 16px;
+    }
+    
+    .not-bot {
+        font-size: 14px;
+    }
+    
+    .dates p {
+        font-size: 12px;
+    }
+    
+    .dates p.data {
+        font-size: 14px;
+    }
+    
+    .order {
+        height: 80px;
+    }
+    
+    .horizontal div {
+        width: 95%;
+    }
+}
