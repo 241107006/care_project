@@ -3,7 +3,7 @@ body {
     width: 100%;
     margin: 0;
 }
-h1{
+.content h1{
     margin: 40px 80px;
 }
 .content {
@@ -87,7 +87,16 @@ h1{
     background-color: #0056b3;
 }
 
-
+@media screen and (max-width: 1440px) {
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .order-details {
+        width: 40%;
+    }
+}
 /* Tablets (1024px and below) */
 @media screen and (max-width: 1024px) {
     h1 {
@@ -99,7 +108,7 @@ h1{
     }
 
     .order-details {
-        width: 80%;
+        width: 50%;
         margin-left: 30px;
     }
 

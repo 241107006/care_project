@@ -1,6 +1,26 @@
 from django import forms
+from datetime import date
+from django.core.exceptions import ValidationError
+from .models import Order
 
 class ClientForm(forms.Form):
+    DAYS_OF_WEEK = [
+        ('Понедельник', 'Понедельник'),
+        ('Вторник', 'Вторник'),
+        ('Среда', 'Среда'),
+        ('Четверг', 'Четверг'),
+        ('Пятница', 'Пятница'),
+        ('Суббота', 'Суббота'),
+        ('Воскресенье', 'Воскресенье'),
+    ]
+    
+    HOURS_PERIOD = [
+        ('Утро', 'Утро (08:00 - 12:00)'),
+        ('День', 'День (12:00 - 16:00)'),
+        ('Вечер', 'Вечер (16:00 - 20:00)'),
+        ('Ночь', 'Ночь (20:00 - 08:00)'),
+    ]
+    
     TASK_NAME_CHOICES = [
             ('Гигиенические процедуры', 'Гигиенические процедуры'),
             ('Кормить', 'Кормить'),
@@ -96,7 +116,7 @@ class ClientForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control', 'onchange':'showOtherInput(this, "other_location_input")'}),)
     other_location = forms.CharField(
         required=False,
-        label="Другое",
+        label="",
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'other_location_input', 'style': 'display: none;'}),
     )
 
@@ -114,8 +134,14 @@ class ClientForm(forms.Form):
     )
     other_frequency = forms.CharField(
         required=False,
-        label="Другое",
+        label="",
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'other_frequency_input', 'style': 'display: none;'}),
+    )
+    days_of_week = forms.MultipleChoiceField(
+        choices=DAYS_OF_WEEK,
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label="",   
     )
     
     WORKING_HOURS_CHOICES = [
@@ -131,9 +157,17 @@ class ClientForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control', 'onchange':'showOtherInput(this, "other_working_hours_input")'}),)
     other_working_hours = forms.CharField(
         required=False,
-        label="Другое",
+        label="",
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'other_working_hours_input', 'style': 'display: none;'}),
-    )    
+    )
+    hours_period = forms.MultipleChoiceField(
+        choices=HOURS_PERIOD,
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label="Выберите часы работы",
+    )
+    
+    
     start_date = forms.DateField(label="Когда нужна услуга", required=False, widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
     address = forms.CharField(label="Адрес выполнения работы", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}))
     payment_min = forms.DecimalField(label="Минимальная оплата", required=False, max_digits=10, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-control'}))
@@ -141,4 +175,35 @@ class ClientForm(forms.Form):
     additional_notes = forms.CharField(label="Пожелания к заказу", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}))
     phone = forms.CharField(label="Номер телефона", max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
     full_name = forms.CharField(label="Имя и фамилия клиента", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    
+    
+    class Meta:
+        model = Order
+        fields = '__all__'
+        widgets = {
+            'frequency': forms.Select(attrs={'class': 'form-control', 'onchange': 'toggleFields()'}),
+            'working_hours': forms.Select(attrs={'class': 'form-control', 'onchange': 'toggleFields()'}),
+        }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        frequency = cleaned_data.get("frequency")
+        working_hours = cleaned_data.get("working_hours")
+        days_of_week = cleaned_data.get("days_of_week")
+        hours_period = cleaned_data.get("hours_period")
+        start_date = cleaned_data.get("start_date")
+
+        if frequency == 'Несколько раз в неделю':
+            if not days_of_week:
+                self.add_error("days_of_week", "Выберите хотя бы один день недели.")
+            cleaned_data["frequency"] = ", ".join(days_of_week) if days_of_week else frequency
+        
+        if working_hours == 'Несколько часов в день':
+            if not hours_period:
+                self.add_error("hours_period", "Выберите хотя бы один период времени.")
+            cleaned_data["working_hours"] = ", ".join(hours_period) if hours_period else working_hours
+        
+        if start_date and start_date < date.today():
+            self.add_error("start_date", "Дата должна быть в будущем.")
+            
+        return cleaned_data
