@@ -20,6 +20,27 @@
         }
     </style>
     <script>
+        function toggleFields() {
+            let frequency = document.getElementById("id_frequency");
+            let workingHours = document.getElementById("id_working_hours");
+            
+            let daysField = document.getElementById("id_days_of_week");
+            let hoursField = document.getElementById("id_hours_period");
+
+            console.log(frequency.value, frequency.value === "Несколько раз в неделю");
+            if (frequency.value === "Несколько раз в неделю") {
+                daysField.style.display = "block";
+            } else {
+                daysField.style.display = "none";
+            }
+        
+            console.log(workingHours.value, workingHours.value === "Несколько часов в день")
+            if (workingHours.value === "Несколько часов в день") {
+                hoursField.style.display = "block";
+            } else {
+                hoursField.style.display = "none";
+            }
+        }
         function showOtherInput(selectElement, inputId) {
             var otherInput = document.getElementById(inputId);
             if (selectElement.value === 'Другое') {
@@ -27,13 +48,27 @@
             } else {
                 otherInput.style.display = 'none';
             }
+            toggleFields();
         }
+        
+        document.addEventListener("DOMContentLoaded", toggleFields);
+        toggleFields();
     </script>
 </head>
 <body>
     {% include 'header.html' %}
     <div class="container mt-5">
         <h1>Создать заказ</h1>
+        {% if form.errors %}
+        <h4 style='color: red;' id='errorMessage'></h4>
+        <script>
+            let errorMessage = "";
+            {% for field, errors in form.errors.items %}
+                errorMessage += "{{ field|escapejs }}: {{ errors.as_text|escapejs }}\n";
+            {% endfor %}
+            document.getElementById('errorMessage').innerText = errorMessage;
+        </script>
+        {% endif %}
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
@@ -43,7 +78,7 @@
     <div style='margin:100px;'></div>
     {% include 'footer.html' %}
     {% if task_name %}
-    <script>
+    <script> 
         const task_name = '{{task_name}}';
         const option = document.querySelector('option[value="Другое"]');
         const other = document.getElementById("other_task_name_input");

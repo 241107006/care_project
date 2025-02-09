@@ -1,47 +1,61 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Заказ успешно создан</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+    <title>Заказ принят</title>
+    <link rel="stylesheet" href="{% static 'care_app/header.css' %}">
+    <link rel="stylesheet" href="{% static 'care_app/all_orders.css' %}">
     <style>
-        body {
-            margin: 80px;
-            color: #333;
+        @font-face {
+            font-family: 'PTSans';
+            src: url("{% static 'fonts/PTSans-Regular.ttf' %}") format('truetype');
+        } @font-face {
+            font-family: 'Roboto';
+            src: url("{% static 'fonts/Roboto-Regular.ttf' %}") format('truetype');
+        } @font-face {
+            font-family: 'Monsterrat';
+            src: url("{% static 'fonts/Montserrat-Regular.ttf' %}") format('truetype');
         }
-        h1 {
+        #success-text {
             color: #4CAF50;
-        }
-        h2{
-            margin: 10px 0;
-        }
-        p {
-            margin: 10px 0;
-            line-height: 1.5;
-        }
-        .order-details {
-            padding: 15px;
-            background: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <h1>Ваш заказ успешно создан!</h1>
-    <div class="order-details">
-        <p><strong>Название задачи:</strong> {{ order.task_name }}</p>
-        <p><strong>Мобильность клиента:</strong> {{ order.mobility }}</p>
-        <p><strong>Возраст клиента:</strong> {{ order.age }} лет</p>
-        <p><strong>Номер телефона:</strong> {{ order.phone }}</p>
-        <p><strong>Имя и фамилия:</strong> {{ order.full_name }}</p>
+    {% include 'header.html' %}
+    <div class='content'>
+        <h1 id='success-text'>Ваш заказ принят!</h1>
+
+        <div class="order-details">
+            <h3>{{ order.task_name }}</h3>
+            <p><strong>Кому нужна помощь:</strong> {{ order.help_for }}</p>
+            <p><strong>Пол клиента:</strong> {{ order.gender }}</p>
+            <p><strong>Возраст:</strong> {{ order.age }}</p>
+            <p><strong>Вес (кг):</strong> {{ order.weight }}</p>
+            <p><strong>Рост (см):</strong> {{ order.height }}</p>
+            <p><strong>Особенности здоровья:</strong> {{ order.health_issues }}</p>
+            <p><strong>Передвижение:</strong> {{ order.mobility }}</p>
+            <p><strong>Место ухода:</strong> {{ order.care_location }}</p>
+            <p><strong>Частота:</strong> {{ order.frequency }}</p>
+            <p><strong>Время работы:</strong> {{ order.working_hours }}</p>
+            <p><strong>Дата начала:</strong> {{ order.start_date }}</p>
+            <p><strong>Адрес:</strong> {{ order.address }}</p>
+            <p><strong>Минимальная оплата:</strong> {{ order.payment_min }}</p>
+            <p><strong>Максимальная оплата:</strong> {{ order.payment_max }}</p>
+            <p><strong>Пожелания:</strong> {{ order.additional_notes }}</p>
+            <p><strong>Контакты:</strong> {{ order.phone }} ({{ order.full_name }})</p>
+            <p><strong>Создан:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+            <!--<p><strong>Статус:</strong> {{ order.status }}</p>-->
+            <div class='buttons'>
+            <a href="{% url 'my_orders' %}" class="return">Вернуться к моим заказам</a>
+            </div>
+        </div>
     </div>
+    
 
-    <h2>Спасибо за ваш заказ!</h2>
-    <p>С вами свяжутся в ближайшее время для уточнения деталей.</p>
-    <a href="{% url 'my_orders' %}" class="btn btn-primary">Посмотреть мои заказы</a>
 
+    <div style='margin:100px;'></div>
+    {% include 'footer.html' %}
 </body>
-</html>

@@ -18,7 +18,15 @@ def create_code():
 
 def login_view(request):
     if request.method == 'GET':
-        return render(request, 'authorisation/login.html')
+        if request.GET.get('specialist', '').lower() == 'true':
+            context = {
+            'user_type': 'specialist'
+            }
+        else:
+            context = {
+            'user_type': 'client'
+            }
+        return render(request, 'authorisation/login.html', context)
     if request.method == 'POST':
         print(request.POST)
         phone = request.POST.get('phone')
@@ -121,7 +129,7 @@ def logout_view(request):
 
 def create_order(request):
     if not request.user.is_authenticated:
-        return HttpResponse("User must be authenticated<br><a href='/'>Home page</a>")
+        return redirect('login')
     if request.method == 'POST':
         form = ClientForm(request.POST)
         if form.is_valid():
@@ -152,8 +160,9 @@ def create_order(request):
     task_name = request.GET.get('task_name')
     return render(request, 'create_order.html', {'form': form, 'task_name': task_name})
 
-@login_required
 def my_orders(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if request.user.user_type == 'Client':
         orders = Order.objects.filter(author=request.user)
         return render(request, 'my_orders.html', {'orders': orders})
@@ -172,8 +181,9 @@ def all_orderds(request):
     #<a href="{% url 'order_accept' order.id %}" class="btn btn-primary">Просмотреть</a>
     return render(request, 'all_orders.html', {'orders': orders})
 
-@login_required
 def order_accept(request, order_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if request.user.user_type != 'Specialist':
         return redirect('home')
     order = get_object_or_404(Order, id=order_id)
@@ -202,6 +212,7 @@ def order_detail(request, order_id):
     return render(request, 'order_detail.html', {'order': order, 'action': action})
 
 def order_success(request, order_id):
+    # If not my order redirect
     order = Order.objects.get(id=order_id)
     return render(request, 'order_success.html', {'order': order})
 
@@ -233,9 +244,10 @@ def send_message(request, chat_id):
         )
         return JsonResponse({'status': 'ok'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
-    
-@login_required    
+       
 def profile(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if request.method == 'POST':
         name = request.POST.get('name')
         surname = request.POST.get('surname')
@@ -266,8 +278,9 @@ def profile(request):
     return render(request, 'profile.html', {'document_is_pdf': document_is_pdf})
     
     
-@login_required
 def chats(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     chats = Chat.objects.filter(Q(user1=request.user) | Q(user2=request.user))
     chat_list = []
     for chat in chats:
@@ -280,8 +293,9 @@ def chats(request):
         })
     return render(request, 'chats.html', {'chats': chat_list})
 
-@login_required
 def chat(request, chat_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
     chat = Chat.objects.filter(id=chat_id).first()
     if not chat or (chat.user1 != request.user and chat.user2 != request.user):
         return HttpResponse("Invalid chat<br><a href='/'>Home</a>", status=400)
@@ -300,8 +314,9 @@ def chat(request, chat_id):
     companion = chat.user1 if request.user == chat.user2 else chat.user2
     return render(request, 'chat.html', {'chats': chat_list, 'current': chat, 'messages': messages, 'companion': companion})
 
-@login_required
 def notifications(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     '''Notification.objects.create(
         user=request.user,
         name = 'На вашу заявку откликнулись!', 
