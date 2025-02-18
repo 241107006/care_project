@@ -116,6 +116,14 @@ p.data {
     font-size: 20px;
 }
 
+.add-order div {
+    display: flex;
+    justify-content: center;
+}
+.add-order img {
+    width: 100px;
+}
+
 /* 1440px - Large screens */
 @media screen and (max-width: 1440px) {
     .content {
@@ -194,6 +202,9 @@ p.data {
     
     .horizontal div {
         width: 85%;
+    }
+    .add-order img {
+        width: 80px;
     }
 }
 

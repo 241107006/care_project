@@ -7,6 +7,7 @@
         <a href='/' style='text-decoration:none;color:black;'>
             <p class='header-text'>Главная</p></a>
         <p class='header-text'>Алматы</p>
+
         {% if user_type %}
             {% if user_type == 'specialist' %}
                 <a href='/login?specialist=true' style='text-decoration:none;color:black;'>
@@ -20,7 +21,9 @@
                 <div class='header-spec'>Вход для специалистов</div></a>
             {% endif %}
             <div class='header-guest'>
-                <img src="{% static 'images/guest-header.png' %}">Гость</div>
+                <img id='user-circle' src="{% static 'images/guest-header.png' %}"><span id='header-user-name'>Гость</span>
+                </div>
+
         {% else %}
             {% if user.is_authenticated %}
                 {% if request.user.user_type == 'Client' %}
@@ -36,8 +39,12 @@
                         <div class='header-spec'>Заказы</div></a>
 
                 {% endif %}
-                <a href='/profile' style='text-decoration:none; color: inherit;'>
-                    <div class='header-guest'><img src="{% static 'images/user-header.png' %}">{{user.name}}</div></a>
+                <a id='dropdown-trigger' href='/profile' style='text-decoration:none; color: inherit;'>
+                    <div class='header-guest'>
+                        <img id='user-circle' src="{% static 'images/user-header.png' %}">
+                        <span id='header-user-name'>{{user.name}}</span>
+                        <img id='dropdown' src="{% static 'images/header-dropdown.png' %}"></div></a>
+
 
             {% else %}
             <a href='/login' style='text-decoration:none;color:black;'>
@@ -45,9 +52,46 @@
 
             <a href='/my_orders' style='text-decoration:none;color:black;'>
                 <div class='header-spec'>Мои заказы</div></a>
+
             <div class='header-guest'>
-                <img src="{% static 'images/guest-header.png' %}">Гость</div>
+                <img id='user-circle' src="{% static 'images/guest-header.png' %}"><span id='header-user-name'>Гость</span>
+                </div>
             {% endif %}
         {% endif %}
     </div>
 </header>
+<div class='dropdown-menu'>
+    <div class='dropdown-content'>
+        <div class='dropdown-text'>
+            <a href='/profile'>
+            Профиль
+            </a>
+        </div>
+        <div class='dropdown-text'>
+            <a href='/my_orders'>
+            Мои заказы
+            </a>
+        </div>
+        <div class='dropdown-text' style='border-bottom: none;'>
+            Алматы
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('dropdown-trigger').addEventListener('click', function (event) {
+        if (window.innerWidth <= 480) {
+            event.preventDefault();
+            const dropdown = document.querySelector('.dropdown-menu');
+            const rect = this.getBoundingClientRect();
+            
+            dropdown.classList.toggle('show');
+        
+            event.stopPropagation();
+        }
+    });
+      
+    document.addEventListener('click', function () {
+        document.querySelector('.dropdown-menu').classList.remove('show');
+    });
+</script>

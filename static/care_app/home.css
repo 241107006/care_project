@@ -5,6 +5,7 @@ body {
 } 
 .content {
     margin-left: 118px;
+    padding-right: 118px;
     /* width: calc(100% - 118px); */
 }
 .search {
@@ -66,13 +67,22 @@ body {
     width: 90%;
 }
 
-
+.second-itemss {
+    display:flex; 
+    margin-top: 30px; 
+    gap: 38px;
+}
 
 .search-container {
     display: flex;
     gap: 10px;
     width: 100%;
     max-width: 1140px;
+}
+
+.search-topics a button {
+    color: rgba(0,0,0,0.45);
+    font-family: Monsterrat;
 }
 
 input#taskInput {
@@ -88,6 +98,10 @@ input#taskInput {
     font-size: 20px;
     font-family: Monsterrat;
     font-weight: 500;
+}
+
+.second-hand {
+    display: none;
 }
 
 
@@ -124,6 +138,17 @@ input#taskInput {
     .content {
         margin-left: 30px;
         padding-right: 30px;
+    }
+    .first-block {
+        padding: 0 20px;
+    }
+    .second-block {
+        padding: 0 20px;
+    }
+    .search-topics {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
     .first-block h1 {
@@ -165,22 +190,31 @@ input#taskInput {
     }
     
     .image {
-        width: 45%;
+        /* width: 45%; */
         margin-bottom: 20px;
     }
     
     .second-block > div:first-child {
         flex-direction: column;
     }
+
+    #hands-img {
+        margin-top: 30px;
+    }
     
     .second-block img {
-        margin-top: 30px;
         max-width: 100%;
     }
     
     .second-item {
         width: 90%;
         margin-bottom: 30px;
+    }
+    .second-itemss {
+        gap: 0;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 20px;
     }
 }
 
@@ -199,7 +233,7 @@ input#taskInput {
     }
     
     .second-block h2 {
-        font-size: 24px !important;
+        font-size: 18px !important;
     }
     
     .search {
@@ -213,14 +247,40 @@ input#taskInput {
         height: 35px;
     }
     
-    .image {
+    .imagess a {
+        width: 45%;
+    }
+    .image img {
         width: 100%;
+        border-radius: 30px;
     }
     
     .image p {
-        font-size: 18px !important;
+        font-size: 15px !important;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    #hands-img {
+        display: none;
+    }
+    .second-hand {
+        display: flex;
+        padding: 0 20px;
+        justify-content: center;
+    }
+    #hands-img2 {
+        width: 100%;
     }
     
+    .second-block {
+        margin-top: 100px;
+    }
+
+    .second-item {
+        padding: 20px 5%;
+    }
+
     .second-item h2 {
         font-size: 22px !important;
     }
@@ -228,14 +288,17 @@ input#taskInput {
     .second-item p {
         font-size: 14px !important;
     }
-    
+
     .second-block > div:last-child {
         flex-direction: column;
     }
+
 }
 
 /* Mobile-specific adjustments */
 @media screen and (max-width: 480px) {
+    
+
     .content {
         margin-left: 10px !important;
         padding-right: 10px !important;
@@ -254,7 +317,15 @@ input#taskInput {
         padding: 0 10px !important;
     }
     
-    .second-block img {
-        height: 200px !important;
+    .second-block h2 {
+        font-size: 15px !important;
+    }
+    
+    .image p {
+        font-size: 13px !important;
+    }
+    
+    .second-block {
+        margin-top: 50px;
     }
 }

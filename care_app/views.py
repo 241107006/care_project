@@ -133,9 +133,12 @@ def create_order(request):
     if request.method == 'POST':
         form = ClientForm(request.POST)
         if form.is_valid():
+            task_name = form.cleaned_data['task_name']
+            if form.cleaned_data['other_task_name']:
+                task_name = form.cleaned_data['other_task_name']
             order = Order.objects.create(
                 author=request.user,
-                task_name=form.cleaned_data['task_name'],
+                task_name=task_name,
                 help_for=form.cleaned_data['help_for'],
                 gender=form.cleaned_data['gender'],
                 age=form.cleaned_data['age'],

@@ -39,8 +39,8 @@ class ClientForm(forms.Form):
     )
     other_task_name = forms.CharField(
         required=False,
-        label="Введите что нужно сделать",
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'other_task_name_input'}),
+        label="",
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'other_task_name_input', 'placeholder': 'Введите что нужно сделать'}),
     )
 
 
@@ -86,8 +86,8 @@ class ClientForm(forms.Form):
     )
     other_health_issues = forms.CharField(
         required=False,
-        label="Напишите особенности здоровья",
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'other_health_issues_input', 'style': 'display: none;'}),
+        label="",
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'other_health_issues_input', 'style': 'display: none;', 'placeholder': 'Напишите особенности здоровья'}),
     )
 
 
@@ -145,8 +145,8 @@ class ClientForm(forms.Form):
     )
     
     WORKING_HOURS_CHOICES = [
-        ('Несколько часов в день', 'Несколько часов в день'),
         ('Полный день', 'Полный день'),
+        ('Несколько часов в день', 'Несколько часов в день'),
         ('Круглосуточно', 'Круглосуточно'),
         ('Только ночью', 'Только ночью'),
         ('Другое','Другое')
@@ -164,7 +164,7 @@ class ClientForm(forms.Form):
         choices=HOURS_PERIOD,
         widget=forms.CheckboxSelectMultiple,
         required=False,
-        label="Выберите часы работы",
+        label="",
     )
     
     

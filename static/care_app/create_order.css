@@ -1,0 +1,19 @@
+.btnn {
+    background-color: #4B5655;
+    border-radius: 16px;
+    width: 240px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: white;
+}
+
+select, input[type='text'], input[type='number'], input[type='date'] {
+    border-radius: 13px;
+}
+
+.form-control {
+    border-radius: 13px;
+}

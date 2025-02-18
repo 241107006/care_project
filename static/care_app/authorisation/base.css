@@ -68,6 +68,9 @@ p {
     display: flex;
     margin-left: -38px;
 }
+.radio-line div {
+    display: flex;
+}
 .register-box button {
     width: 448px;
     height: 60px;
@@ -122,13 +125,27 @@ label[for='agree-checkbox'] {
     font-family: PTSans;
 }
 
+input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1024px) {
     .register-box {
         width: 80%;
     }
 
     .register-box input {
-        width: 90%;
+        width: 70%;
+    }
+    .register-box input[type='checkbox'] {
+        width: 20px;
+        height: 20px;
     }
 }
 
@@ -144,15 +161,23 @@ label[for='agree-checkbox'] {
     }
 
     .register-box input {
-        width: 85%;
+        width: 70%;
         height: 50px;
         font-size: 18px;
+    }
+    .register-box input[type='checkbox'] {
+        width: 20px;
+        height: 20px;
     }
 
     .register-box button {
         width: 85%;
         height: 50px;
         font-size: 20px;
+    }
+    
+    .radio-line {
+        flex-wrap: wrap;
     }
 }
 
@@ -172,11 +197,18 @@ label[for='agree-checkbox'] {
         height: 45px;
         font-size: 16px;
     }
+    .register-box input[type='checkbox'] {
+        width: 30px;
+        height: 30px;
+    }
 
     .register-box button {
         width: 80%;
         height: 45px;
         font-size: 18px;
+    }
+    .register-box label {
+        font-size: 20px;
     }
 }
 
@@ -196,10 +228,18 @@ label[for='agree-checkbox'] {
         height: 40px;
         font-size: 14px;
     }
+    .register-box input[type='checkbox'] {
+        width: 30px;
+        height: 30px;
+    }
 
     .register-box button {
         width: 75%;
         height: 40px;
         font-size: 16px;
     }
+    .register-box label {
+        font-size: 18px;
+    }
+
 }

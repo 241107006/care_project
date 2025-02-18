@@ -7,6 +7,7 @@
     <title>Создать заказ</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'care_app/header.css' %}">
+    <link rel="stylesheet" href="{% static 'care_app/create_order.css' %}">
     <style>
         @font-face {
             font-family: 'PTSans';
@@ -72,13 +73,13 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Опубликовать заказ</button>
+            <button type="submit" class="btnn">Опубликовать заказ</button>
         </form>
     </div>
     <div style='margin:100px;'></div>
     {% include 'footer.html' %}
     {% if task_name %}
-    <script> 
+    <script>
         const task_name = '{{task_name}}';
         const option = document.querySelector('option[value="Другое"]');
         const other = document.getElementById("other_task_name_input");
