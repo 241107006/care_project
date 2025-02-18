@@ -99,16 +99,11 @@ def register_view(request):
             if not all([phone, email, name, birthday, gender]):
                 request.session['registration_step'] = 1
                 return redirect('register')
-            try:
-                birthday_datetime = datetime.strptime(birthday, "%d-%m-%Y")
-                birthday_formatted = birthday_datetime.strftime("%Y-%m-%d")
-            except ValueError as e:
-                print("Invalid date format:", e)
             user = CustomUser(
                 phone=phone,
                 email=email,
                 name=name,
-                birthday=birthday_formatted,
+                birthday=birthday,
                 sex=gender,
                 password=make_password(password),
             )
