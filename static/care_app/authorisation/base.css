@@ -26,7 +26,7 @@ p {
 }
 .register-box {
     width: 533px;
-    height: 337px;
+    height: 397px;
     border: 1px solid rgba(191, 190, 190, 1);
     border-radius: 16px;
     font-family: 'Roboto';
@@ -190,16 +190,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .register-box {
         width: 95%;
         padding-top: 30px;
+        height: 347px;
     }
 
     .register-box input {
         width: 70%;
         height: 45px;
         font-size: 16px;
-    }
-    .register-box input[type='checkbox'] {
-        width: 30px;
-        height: 30px;
     }
 
     .register-box button {
@@ -221,6 +218,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .register-box {
         width: 100%;
         padding-top: 20px;
+        height: 317px;
     }
 
     .register-box input {
@@ -229,8 +227,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 14px;
     }
     .register-box input[type='checkbox'] {
-        width: 30px;
-        height: 30px;
+        width: 15px;
+        height: 15px;
     }
 
     .register-box button {

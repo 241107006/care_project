@@ -8,55 +8,37 @@
             <p class='header-text'>Главная</p></a>
         <p class='header-text'>Алматы</p>
 
-        {% if user_type %}
-            {% if user_type == 'specialist' %}
-                <a href='/login?specialist=true' style='text-decoration:none;color:black;'>
-                    <div class='header-client'>Вход для специалистов</div></a>
-                <a href="/login" style='text-decoration:none;color:black;'>
-                    <div class='header-spec'>Вход для клиентов</div></a>
+        {% if user.is_authenticated %}
+            {% if request.user.user_type == 'Client' %}
+                <a href='/create_order' style='text-decoration:none;color:black;'>
+                    <div class='header-client'>Создать заказ</div></a>
+                <a href="/my_orders" style='text-decoration:none;color:black;'>
+                    <div class='header-spec'>Мои заказы</div></a>
+
             {% else %}
-            <a href='/login' style='text-decoration:none;color:black;'>
-                <div class='header-client'>Вход для клиентов</div></a>
-            <a href="/login?specialist=true" style='text-decoration:none;color:black;'>
-                <div class='header-spec'>Вход для специалистов</div></a>
+                <a href='/' style='text-decoration:none;color:black;'>
+                    <div class='header-client'>Специалист</div></a>
+                <a href="/all_orders" style='text-decoration:none;color:black;'>
+                    <div class='header-spec'>Заказы</div></a>
+
             {% endif %}
-            <div class='header-guest'>
-                <img id='user-circle' src="{% static 'images/guest-header.png' %}"><span id='header-user-name'>Гость</span>
-                </div>
+            <a id='dropdown-trigger' href='/profile' style='text-decoration:none; color: inherit;'>
+                <div class='header-guest'>
+                    <img id='user-circle' src="{% static 'images/user-header.png' %}">
+                    <span id='header-user-name'>{{user.name}}</span>
+                    <img id='dropdown' src="{% static 'images/header-dropdown.png' %}"></div></a>
+
 
         {% else %}
-            {% if user.is_authenticated %}
-                {% if request.user.user_type == 'Client' %}
-                    <a href='/login' style='text-decoration:none;color:black;'>
-                        <div class='header-client'>Вход для клиентов</div></a>
-                    <a href="/my_orders" style='text-decoration:none;color:black;'>
-                        <div class='header-spec'>Мои заказы</div></a>
+        <a href='/login' style='text-decoration:none;color:black;'>
+            <div class='header-client'>Вход</div></a>
 
-                {% else %}
-                    <a href='/login' style='text-decoration:none;color:black;'>
-                        <div class='header-client'>Вход для специалистов</div></a>
-                    <a href="/all_orders" style='text-decoration:none;color:black;'>
-                        <div class='header-spec'>Заказы</div></a>
+        <a href='/all_orders' style='text-decoration:none;color:black;'>
+            <div class='header-spec'>Заказы</div></a>
 
-                {% endif %}
-                <a id='dropdown-trigger' href='/profile' style='text-decoration:none; color: inherit;'>
-                    <div class='header-guest'>
-                        <img id='user-circle' src="{% static 'images/user-header.png' %}">
-                        <span id='header-user-name'>{{user.name}}</span>
-                        <img id='dropdown' src="{% static 'images/header-dropdown.png' %}"></div></a>
-
-
-            {% else %}
-            <a href='/login' style='text-decoration:none;color:black;'>
-                <div class='header-client'>Вход для клиентов</div></a>
-
-            <a href='/my_orders' style='text-decoration:none;color:black;'>
-                <div class='header-spec'>Мои заказы</div></a>
-
-            <div class='header-guest'>
-                <img id='user-circle' src="{% static 'images/guest-header.png' %}"><span id='header-user-name'>Гость</span>
-                </div>
-            {% endif %}
+        <div class='header-guest'>
+            <img id='user-circle' src="{% static 'images/guest-header.png' %}"><span id='header-user-name'>Гость</span>
+            </div>
         {% endif %}
     </div>
 </header>
@@ -72,8 +54,13 @@
             Мои заказы
             </a>
         </div>
-        <div class='dropdown-text' style='border-bottom: none;'>
+        <div class='dropdown-text'>
             Алматы
+        </div>
+        <div class='dropdown-text' style='border-bottom: none;'>
+            <a href='/logout'>
+            Выйти
+            </a>
         </div>
     </div>
 </div>

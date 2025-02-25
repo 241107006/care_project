@@ -22,25 +22,35 @@
 </head>
 <body>
     {% include 'header.html' %}
-    <div class='content'>
-        <h1>Все заказы</h1> 
-        {% if orders %}
-            <ul class="order-list">
-                {% for order in orders %}
-                    <li class="order-item">
-                        <h3>{{ order.task_name }}</h3>
-                        <p>Создан: {{ order.created_at|date:"d.m.Y" }}</p>
-                        <p>Кому помощь: {{ order.help_for }}</p>
-                        <p>Пол: {{ order.gender }}</p>
-                        <p>Статус: {{ order.status }}</p>
-                        <a href='/order/{{order.id}}'>Подробнее...</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class='error' style='margin-left:80px; font-size:22px;'>На сайте нет заказов</p>
+    <div class='content'><div class='block'>
+        <div class='top'>
+            <p>Все заказы</p></div>
+        {% for order in orders %}
+        <a href='/order/{{order.id}}' style='text-decoration:none;color:inherit;'><div class='order'>
+            <div class='texts'>
+                <p class='not-top'>{{order.task_name}}</p>
+                <div style='display:flex;'><img src="{% static 'images/mark.png'%}"><p class='not-bot'>{{order.address}}</p></div>
+            </div>
+            <div class='dates'>
+                <p class='data'>Дата</p>
+                <p>{{order.start_date}}</p>
+            </div>
+        </div>
+        <div class='additional-info'>
+            <div class='add-info'>
+                <p class='add-info-p'>Как часто нужна помощь:  {{order.frequency}}</p>
+                <p class='add-info-p'>Время работы:  {{order.working_hours}}</p>
+                <p class='add-info-p'>Оплата:  {{order.payment_min}}</p>
+                <p class='add-info-p'>Место ухода:  {{order.care_location}}</p>
+            </div>
+        </div>
+    </a>
+        <div class='horizontal'><div></div></div>
+        {% endfor %}
+        {% if not orders %}
+        <p class='error'>На сайте нет заказов</p>
         {% endif %}
-    </div>
+    </div></div>
 
     <div style='margin:100px;'></div>
     {% include 'footer.html' %}

@@ -55,20 +55,23 @@ class Order(models.Model):
     )
     
 class CustomUserManager(BaseUserManager):
-    def create_user(self, phone, email, name, surname, birthday, sex, password=None):
+    def create_user(self, phone, email, name, birthday, sex, password=None, user_type='Client'):
         if not phone:
             raise ValueError("The Phone field is required.")
         if not email:
             raise ValueError("The Email field is required.")
+        
+        if user_type not in ('Client', 'Specialist'):
+            user_type = 'Client'
 
         email = self.normalize_email(email)
         user = self.model(
             phone=phone,
             email=email,
             name=name,
-            surname=surname,
             birthday=birthday,
             sex=sex,
+            user_type=user_type,
         )
         user.set_password(password)
         user.save(using=self._db)

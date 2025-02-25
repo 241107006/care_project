@@ -18,15 +18,7 @@ def create_code():
 
 def login_view(request):
     if request.method == 'GET':
-        if request.GET.get('specialist', '').lower() == 'true':
-            context = {
-            'user_type': 'specialist'
-            }
-        else:
-            context = {
-            'user_type': 'client'
-            }
-        return render(request, 'authorisation/login.html', context)
+        return render(request, 'authorisation/login.html')
     if request.method == 'POST':
         print(request.POST)
         phone = request.POST.get('phone')
@@ -42,81 +34,133 @@ def login_view(request):
         
 
 def register_view(request):
-    step = request.session.get('registration_step', 1)
+    try:
+        step = int(request.POST.get('step', 1))
+    except ValueError:
+        step = 1
+
+    context = {
+        'step': step,
+        'isSpecialist': request.POST.get('isSpecialist', 'no'),
+        'phone': request.POST.get('phone', ''),
+        'email': request.POST.get('email', ''),
+        'name': request.POST.get('name', ''),
+        'birthday': request.POST.get('birthday', ''),
+        'sex': request.POST.get('sex', ''),
+    }
+    print(context)
+    
     if request.method == 'GET':
-        print('Method GET')
-        if step == 2:
-            phone = request.session['phone']
-            if phone:
-                code = SMSCode.objects.filter(phone=phone).first()
-                return render(request, 'authorisation/register.html', {'step': step, 'code': code})
-        return render(request, 'authorisation/register.html', {'step': step})
+        # if step == 2 and context['phone']:
+        #     code = SMSCode.objects.filter(phone=context['phone']).order_by('-created_at').first()
+        #     context['code'] = code
+        return render(request, 'authorisation/register.html', context)
+    
     if request.method == 'POST':
-        print(request.POST)
+        phone = request.POST.get('phone', '')
+        email = request.POST.get('email', '')
+        name = request.POST.get('name', '')
+        birthday = request.POST.get('birthday', '')
+        sex = request.POST.get('sex', '')
+        isSpecialist = request.POST.get('isSpecialist', 'no')
+        
         if step == 1:
-            phone = request.POST.get('phone')
-            email = request.POST.get('email')
-            print(phone, email)
+            print('step 1', phone, email)
+            # Step 1: Collect phone and email.
             if not phone or not email:
-                return redirect('register')
-            if CustomUser.objects.filter(phone=phone).exists() or CustomUser.objects.filter(email=email):
-                return redirect('register')
+                context['error'] = "Phone and email are required."
+                return render(request, 'authorisation/register.html', context)
             
-            '''new_code = create_code()
-            code, created = SMSCode.objects.get_or_create(phone=phone, code=new_code)
-            print(code, created)
-            if code.code != new_code:
-                code.code = new_code
-                code.save()'''
-            request.session['phone'] = phone
-            request.session['email'] = email
-            request.session['registration_step'] = 3
-            return redirect('register')
-        if step == 3:
-            name = request.POST.get('name')
-            birthday = request.POST.get('birthday')
-            gender = request.POST.get('sex')
-            print(name, birthday, gender)
-            if not name or not birthday or not gender:
-                return redirect('register')
+            if CustomUser.objects.filter(phone=phone).exists():
+                context['error'] = 'Phone already in use'
+                context['phone'] = ''
+                return render(request, 'authorisation/register.html', context)
+            if CustomUser.objects.filter(email=email).exists():
+                context['error'] = 'Email already in use'
+                context['email'] = ''
+                return render(request, 'authorisation/register.html', context)
             
-            request.session['name'] = name
-            request.session['birthday'] = birthday
-            request.session['gender'] = gender
-            request.session['registration_step'] = 4
-            return redirect('register')
-        if step == 4:
-            password = request.POST.get('password')
-            password2 = request.POST.get('password2')
-            print(password, password2)
-            if not password or not password2 or not password == password2:
-                return redirect('register')
-            phone = request.session['phone']
-            email = request.session['email']
-            name = request.session['name']
-            birthday = request.session['birthday']
-            gender = request.session['gender']
-            if not all([phone, email, name, birthday, gender]):
-                request.session['registration_step'] = 1
-                return redirect('register')
-            user = CustomUser(
+            context['step'] = 3
+            return render(request, 'authorisation/register.html', context)
+        
+        elif step == 2:
+            # Step 2: For example, OTP verification could be handled here.
+            # We assume OTP verification is done and move to step 3.
+            return render(request, 'authorisation/register.html', context)
+        
+        elif step == 3:
+            # If previous data not fully provided return by steps
+            if not phone or not email:
+                context['step'] = 1
+                context['error'] = "Phone and email are required."
+                return render(request, 'authorisation/register.html', context)
+            if CustomUser.objects.filter(phone=phone).exists():
+                context['error'] = 'Phone already in use'
+                context['step'] = 1
+                context['phone'] = ''
+                return render(request, 'authorisation/register.html', context)
+            if CustomUser.objects.filter(email=email).exists():
+                context['error'] = 'Email already in use'
+                context['step'] = 1
+                context['email'] = ''
+                return render(request, 'authorisation/register.html', context)
+            
+            # Step 3: Collect additional information (name, birthday, sex).
+            if not name or not birthday or not sex:
+                context['error'] = "Name, birthday, and gender are required."
+                return render(request, 'authorisation/register.html', context)
+            
+            context['step'] = 4
+            return render(request, 'authorisation/register.html', context)
+        
+        elif step == 4:
+            # If previous data not fully provided return by steps
+            if not phone or not email:
+                context['step'] = 1
+                context['error'] = "Phone and email are required."
+                return render(request, 'authorisation/register.html', context)
+            if CustomUser.objects.filter(phone=phone).exists():
+                context['error'] = 'Phone already in use'
+                context['step'] = 1
+                context['phone'] = ''
+                return render(request, 'authorisation/register.html', context)
+            if CustomUser.objects.filter(email=email).exists():
+                context['error'] = 'Email already in use'
+                context['step'] = 1
+                context['email'] = ''
+                return render(request, 'authorisation/register.html', context)
+            if not name or not birthday or not sex:
+                context['error'] = "Name, birthday, and gender are required."
+                context['step'] = 3
+                return render(request, 'authorisation/register.html', context)
+            
+            # Step 4: Password creation.
+            password = request.POST.get('password', '')
+            password2 = request.POST.get('password2', '')
+            
+            if not password or not password2:
+                context['error'] = "Both password fields are required."
+                return render(request, 'authorisation/register.html', context)
+            
+            if password != password2:
+                context['error'] = "Passwords do not match."
+                return render(request, 'authorisation/register.html', context)
+            
+            user_type = 'Specialist' if isSpecialist == 'yes' else 'Client'
+            print(user_type)
+            user = CustomUser.objects.create_user(
                 phone=phone,
                 email=email,
                 name=name,
                 birthday=birthday,
-                sex=gender,
-                password=make_password(password),
+                sex=sex,
+                password=password,
+                user_type=user_type,
             )
-            user.save()
-            request.session['registration_step'] = 1
-            request.session['phone'] = ''
-            request.session['email'] = ''
-            request.session['name'] = ''
-            request.session['birthday'] = ''
-            request.session['gender'] = ''
+            
             return redirect('login')
-        
-    return render(request, 'authorisation/register.html')
+    
+    return render(request, 'authorisation/register.html', context)
 
 def logout_view(request):
     logout(request)
@@ -175,7 +219,7 @@ def my_orders(request):
     return render(request, 'my_taken_orders.html', {'orders': orders_list})
 
 def all_orderds(request):
-    orders = Order.objects.all()
+    orders = Order.objects.filter(status='В ожидании').exclude(author=request.user)
     #<a href="{% url 'order_accept' order.id %}" class="btn btn-primary">Просмотреть</a>
     return render(request, 'all_orders.html', {'orders': orders})
 
@@ -207,7 +251,10 @@ def order_accept(request, order_id):
 def order_detail(request, order_id):
     order = Order.objects.get(id=order_id)
     action = request.GET.get('action')
-    return render(request, 'order_detail.html', {'order': order, 'action': action})
+    isMine = False
+    if request.user:
+        isMine = order.author == request.user
+    return render(request, 'order_detail.html', {'order': order, 'action': action, 'isMine': isMine})
 
 def order_success(request, order_id):
     # If not my order redirect

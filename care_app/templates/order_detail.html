@@ -52,7 +52,9 @@
             <a href="{% url 'all_orders' %}" class="return">Вернуться к списку</a>
             {%endif%}
             {% if order.status == 'В ожидании' %}
-            <a class='accept' href='/order/{{order.id}}/accept'>Принять запрос</a>
+                {% if not isMine %}
+                <a class='accept' href='/order/{{order.id}}/accept'>Принять запрос</a>
+                {% endif %}
             {% endif%}
             </div>
         </div>

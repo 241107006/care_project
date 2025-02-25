@@ -30,32 +30,30 @@
             <div class='input-line'>
                 <label for='input-phone'>
                     Номер телефона
-                    <input id='input-phone' type='text' name='phone' placeholder='+7 (___) ___ - __ - __'>
+                    <input id='input-phone' type='text' name='phone' placeholder='+7 (___) ___ - __ - __' value='{{phone}}'>
                 </label>
             </div>
             <div class='input-line'>
                 <label for='input-email'>
                     Адрес электронной почты
-                    <input id='input-email' type='email' name='email'>
+                    <input id='input-email' type='email' name='email' value='{{email}}'>
                 </label>
             </div>
+            <div style='display: flex; align-items: center; gap: 8px; margin-top: 26px;'>
+                <input type='checkbox' id='specialist-checkbox' name='isSpecialist' value='yes' {%if isSpecialist == 'yes'%}checked{%endif%}>
+                <label for='specialist-checkbox' style='margin-left: 10px;'>Я Специалист</label>
+            </div>
+            <input type='hidden' name='step' value='1'>
+            <input type='hidden' name='sex' value='{{sex}}'>
+            <input type='hidden' name='name' value='{{name}}'>
+            <input type='hidden' name='birthday' value='{{birthday}}'>
             <button type='submit'>Продолжить</button>
         </form>
 
         <form method='post' class='register-box' id='step2' style='padding-bottom: 56px; text-align: center;'>
             {% csrf_token %}
-            <h1 style="
-            margin: 0;
-            font-size: 22px;
-            font-weight: 400;
-            font-family: 'PTSANS';
-            margin-bottom: 4px;">Введите код из SMS {{code}}</h1>
-            <p style="
-            margin: 0;
-            font-weight: 400;
-            font-size: 13px;
-            font-family: 'PTSANS';
-            color: rgba(110, 117, 124, 1);">Код отправлен на номер +7 701 817 85 70</p>
+            <h1 style="margin: 0;font-size: 22px;font-weight: 400;font-family: 'PTSANS';margin-bottom: 4px;">Введите код из SMS {{code}}</h1>
+            <p style="margin: 0;font-weight: 400;font-size: 13px;font-family: 'PTSANS';color: rgba(110, 117, 124, 1);">Код отправлен на номер +7 701 817 85 70</p>
             <div class='sms-code'>
                 <input type="text" maxlength="1" id="digit-1" class="digit-input" />
                 <input type="text" maxlength="1" id="digit-2" class="digit-input" />
@@ -65,19 +63,8 @@
                 <input type="text" maxlength="1" id="digit-6" class="digit-input" />
                 <input type='hidden' id='full-code' name='code'/>
             </div>
-            <p style="
-            margin: 0;
-            font-weight: 400;
-            font-size: 13px;
-            font-family: 'PTSANS';
-            color: rgba(110, 117, 124, 1);">Получить новый код можно через <span id='sec'>30</span> сек.</p>
-            <p style="
-            color: rgba(53,147,234,1);
-            font-weight: 400;
-            font-size: 13px;
-            font-family: 'PTSANS';
-            width: 392px;
-            margin-left: 70px;">Вводя код Вы подписываете согласие на сбор, получение, обработку персональных данных</p>
+            <p style="margin: 0;font-weight: 400;font-size: 13px;font-family: 'PTSANS';color: rgba(110, 117, 124, 1);">Получить новый код можно через <span id='sec'>30</span> сек.</p>
+            <p style="color: rgba(53,147,234,1);font-weight: 400;font-size: 13px;font-family: 'PTSANS';width: 392px;margin-left: 70px;">Вводя код Вы подписываете согласие на сбор, получение, обработку персональных данных</p>
 
             <button type='submit' disabled id='step2-btn'>Продолжить</button>
         </form>
@@ -87,13 +74,13 @@
             <div class='input-line' style='margin-bottom:11px;'>
                 <label for='input-name'>
                     ФИО
-                    <input id='input-name' type='text' name='name'>
+                    <input id='input-name' type='text' name='name' value='{{name}}'>
                 </label>
             </div>
             <div class='input-line' style='margin-bottom:11px;'>
                 <label for='input-birthday'>
                     Дата Рождения
-                    <input id='input-birthday' type='date' name='birthday'>
+                    <input id='input-birthday' type='date' name='birthday' value='{{birthday}}'>
                     <!-- <input id='input-birthday' type='text' name='birthday' placeholder='DD-MM-YYYY'> -->
                 </label>
             </div>
@@ -102,20 +89,23 @@
                     Пол
                     <div class='radio-line'>
                         <div>
-                        <input type='radio' id='input-female' name='sex' value='female'>
+                        <input type='radio' id='input-female' name='sex' value='female' {%if sex == 'female'%}checked{%endif%}>
                         <label for='input-female'>Женский</label>
                         </div><div>
-                        <input type='radio' id='input-male' name='sex' value='male'>
+                        <input type='radio' id='input-male' name='sex' value='male' {%if sex == 'male'%}checked{%endif%}>
                         <label for='input-male'>Мужской</label>
                         </div>
                     </div>
                 </label>
             </div>
+            <input type='hidden' name='step' value='3'>
+            <input type='hidden' name='isSpecialist' value='{{isSpecialist}}'>
+            <input type='hidden' name='email' value='{{email}}'>
+            <input type='hidden' name='phone' value='{{phone}}'>
             <button type='submit' style='margin-top: 14px;'>Продолжить</button>
         </form>
 
-        <form method='post' class='register-box' id='step4' style='padding-top: 40px;
-    height: 367px;'>
+        <form method='post' class='register-box' id='step4' style='padding-top: 40px;height: 367px;'>
             {% csrf_token %}
             <label for='input-password'>
                 Пароль
@@ -129,9 +119,17 @@
                 <input type='checkbox' id='agree-checkbox' name='agree'>
                 <label for='agree-checkbox'>Согласие с Условиями использования и Политикой конфиденциальности</label>
             </div>
+
+            <input type='hidden' name='step' value='4'>
+            <input type='hidden' name='isSpecialist' value='{{isSpecialist}}'>
+            <input type='hidden' name='email' value='{{email}}'>
+            <input type='hidden' name='phone' value='{{phone}}'>
+            <input type='hidden' name='sex' value='{{sex}}'>
+            <input type='hidden' name='name' value='{{name}}'>
+            <input type='hidden' name='birthday' value='{{birthday}}'>
             <button type='submit' style='margin-top: 13px;'>Зарегестрироваться</button>
-            <p style='margin: 0; font-size: 16px; font-weight: 400; font-family: PTSans; color: rgba(95, 94, 94, 1);text-align: center;
-    margin-top: 5px;'>Уже есть аккаунт? <a href='/login'>Войдите</a></p>
+            <p style='margin: 0; font-size: 16px; font-weight: 400; font-family: PTSans; color: rgba(95, 94, 94, 1);text-align: center;margin-top: 5px;'>
+                Уже есть аккаунт? <a href='/login'>Войдите</a></p>
         </form>
     </div>
 
@@ -144,6 +142,7 @@
     <div style='margin: 75px'></div>
 
     <script>
+        console.log('{{step}} {{phone}} {{email}}');
         function showForm(step) {
             let block = 'step' + step;
             console.log(block);
@@ -155,6 +154,11 @@
             document.getElementById(block).style.display = 'block';
         }
         showForm({{step}});
+
+        {% if error %}
+        // <div class="alert alert-danger">{{ error }}</div>
+        alert('{{ error }}');
+        {% endif %}
 
 
         const inputs = document.querySelectorAll(".digit-input");
@@ -232,30 +236,6 @@
             document.getElementById('full-code').value = fullcode;
             e.target.submit();
         });
-
-        /* document.getElementById("step3").addEventListener("submit", (e) => {
-            const dateInput = document.getElementById("input-birthday").value;
-            if (!isValidDate(dateInput)) {
-                e.preventDefault();
-                alert("Please enter a valid date in the format DD-MM-YYYY.");
-            }
-        });
-        function isValidDate(dateString) {
-            const regex = /^(\d{2})-(\d{2})-(\d{4})$/;
-            const match = dateString.match(regex);
-            if (!match) {
-                return false;
-            }
-            const day = parseInt(match[1], 10);
-            const month = parseInt(match[2], 10);
-            const year = parseInt(match[3], 10);
-            const date = new Date(year, month - 1, day);
-            return (
-                date.getFullYear() === year &&
-                date.getMonth() === month - 1 &&
-                date.getDate() === day
-            );
-        } */
 
         document.getElementById('step4').addEventListener('submit', (e) => {
             let checkbox = document.getElementById('agree-checkbox');

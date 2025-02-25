@@ -226,7 +226,7 @@
 
     right: 5px;
     width: 96px;
-    height: 92px;
+    height: 104px;
     border-radius: 11px;
     padding: 10px 14px;
 }
@@ -472,7 +472,7 @@
     .header-client {
         font-size: 12px;
         height: 40px;
-        width: 200px;
+        width: 180px;
         padding: 0 5%;
         margin-right: 25px;
         background-color: rgba(27, 31, 38, 0.72);
