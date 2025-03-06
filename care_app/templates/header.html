@@ -50,9 +50,15 @@
             </a>
         </div>
         <div class='dropdown-text'>
+            {% if request.user.user_type == 'Client' %}
             <a href='/my_orders'>
             Мои заказы
             </a>
+            {% else %}
+            <a href='/all_orders'>
+            Заказы
+            </a>
+            {% endif%}
         </div>
         <div class='dropdown-text'>
             Алматы

@@ -104,6 +104,32 @@ input#taskInput {
     display: none;
 }
 
+.second-block-button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.second-block-button {
+    font-family: Monsterrat;
+    text-decoration: none;
+    background-color: #A5E4E7;
+    color: white;
+    width: 156px;
+    height: 64px;
+    font-size: 18px;
+    border-radius: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+.second-itemss.specialist {
+    justify-content: center;
+}
+.second-itemss.specialist .second-item {
+    width: 90%;
+}
 
 @media screen and (max-width: 1440px) {
     .content {
@@ -327,5 +353,11 @@ input#taskInput {
     
     .second-block {
         margin-top: 50px;
+    }
+
+    .second-block-button {
+        width: 106px;
+        height: 44px;
+        font-size: 15px;
     }
 }

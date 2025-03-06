@@ -24,7 +24,12 @@
     {% include 'header.html' %}
     <div class='content'><div class='block'>
         <div class='top'>
-            <p>Все заказы</p></div>
+            {% if task_name %}
+            <p>Заказы по - {{task_name}}</p>
+            {% else %}
+            <p>Все заказы</p>
+            {% endif %}
+        </div>
         {% for order in orders %}
         <a href='/order/{{order.id}}' style='text-decoration:none;color:inherit;'><div class='order'>
             <div class='texts'>
@@ -48,7 +53,7 @@
         <div class='horizontal'><div></div></div>
         {% endfor %}
         {% if not orders %}
-        <p class='error'>На сайте нет заказов</p>
+        <p class='error'>На сайте нет доступных заказов</p>
         {% endif %}
     </div></div>
 

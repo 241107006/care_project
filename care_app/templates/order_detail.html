@@ -55,7 +55,10 @@
                 {% if not isMine %}
                 <a class='accept' href='/order/{{order.id}}/accept'>Принять запрос</a>
                 {% endif %}
-            {% endif%}
+            {% endif %}
+            {% if order.status == 'Принято' and isMine %}
+                <a class='accept' href='/order/{{order.id}}/finish'>Заказ выполнен</a>
+            {% endif %}
             </div>
         </div>
     </div>

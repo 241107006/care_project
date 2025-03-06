@@ -127,6 +127,15 @@ class SMSCode(models.Model):
     phone = models.CharField(max_length=15, unique=True)
     code = models.CharField(max_length=6)
     
+class PasswordCode(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    email = models.EmailField(unique=True)
+    code = models.CharField(max_length=6, unique=True)
+    expiration = models.DateTimeField()
+
+    def __str__(self):
+        return f"Password reset code for {self.email}"
+    
 class Notification(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications', null=True, blank=True)
     name = models.TextField()
@@ -134,6 +143,10 @@ class Notification(models.Model):
     action = models.TextField()
     action_name = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    read = models.BooleanField(
+        default=False,
+        verbose_name='Прочитано'
+    )
     
 class Chat(models.Model):
     user1 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='chats_as_user1', null=True, blank=True)
@@ -150,8 +163,19 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
 class OrderTaken(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, blank=True, related_name='taken_orders')
-    specialist = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name='taken_orders')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True, related_name='order_request')
+    client = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name='order_requests')
+    specialist = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name='taken_order_requests')
+    status = models.CharField(
+        max_length=40, 
+        verbose_name="Статус",
+        choices=[
+            ('В ожидании', 'В ожидании'),
+            ('Принято', 'Принято'),
+            ('Отказано', 'Отказано'),
+        ],
+        default='В ожидании'
+    )
 
     # = models.OneToOneField(Model, on_delete=models.CASCADE, related_name='')
     # = models.ForeignKey(Model, on_delete=models.CASCADE, related_name='')

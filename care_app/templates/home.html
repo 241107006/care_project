@@ -23,7 +23,51 @@
 <body>
     {% include 'header.html' %}
     <div class='content'>
-        <div class='first-block'> 
+        <div class='first-block'>
+            {% if user.is_authenticated and request.user.user_type == 'Specialist' %}
+
+            <h1 style='margin-top: 72px;margin-bottom: 0;font-size: 67px;font-weight: 600;font-family: Monsterrat;color: black;'>Забота, которая <span style='color:rgba(135, 220, 223, 1);'>рядом</span></h1>
+            <h2 style='font-size: 20px;font-weight: 500;font-family: Monsterrat;margin-bottom: 42px;'>Какой заказ ищете?</h2>
+            <div class="search-container">
+                <input type='text' id='taskInput' placeholder='Ключевые слова'>
+                <button class='search' id='searchButton'>Найти</button>
+            </div>
+            <div class='search-topics' style='display:flex;margin-top: 16px;gap: 18px;'>
+                <a href='/all_orders?task_name=Уборка дома'><button class='search-class'>Уборка дома</button></a>
+                <a href='/all_orders?task_name=Приготовление пищи'><button class='search-class'>Приготовление пищи</button></a>
+                <a href='/all_orders?task_name=Медицинский уход'><button class='search-class'>Медицинский уход</button></a>
+            </div>
+            <div style='display:flex;margin-top: 102px;gap: 21px;' class='imagess'>
+                <a href='/all_orders?task_name=Медицинский уход'><div class='image'>
+                    <img src="{% static 'images/first1.png' %}">
+                    <p>Медицинский уход</p>
+                </div></a>
+                <a href='/all_orders?task_name=Приготовление пищи'><div class='image'>
+                    <img src="{% static 'images/first2.png' %}">
+                    <p>Приготовление пищи</p>
+                </div></a>
+                <a href='/all_orders?task_name=Уборка дома'><div class='image'>
+                    <img src="{% static 'images/first3.png' %}">
+                    <p>Уборка дома</p>
+                </div></a>
+                <a href='/all_orders?task_name=Массаж'><div class='image'>
+                    <img src="{% static 'images/first4.png' %}">
+                    <p>Массаж</p>
+                </div></a>
+            </div>
+            <script>
+                document.getElementById('searchButton').addEventListener('click', function () {
+                    const input = document.getElementById('taskInput');
+                    const taskValue = input.value.trim();
+                    if (taskValue) {
+                        window.location.href = `/all_orders?task_name=${encodeURIComponent(taskValue)}`;
+                    } else {
+                        alert('Введите значение перед поиском!');
+                    }
+                });
+            </script>
+            {% else %}
+
             <h1 style='margin-top: 72px;margin-bottom: 0;font-size: 67px;font-weight: 600;font-family: Monsterrat;color: black;'>Забота, которая <span style='color:rgba(135, 220, 223, 1);'>рядом</span></h1>
             <h2 style='font-size: 20px;font-weight: 500;font-family: Monsterrat;margin-bottom: 42px;'>Помощь вашим близким с уходом, медициной, бытом и другим задачам</h2>
             <div class="search-container">
@@ -64,9 +108,25 @@
                     }
                 });
             </script>
+            {% endif %}
         </div>
 
+
+
         <div class='second-block'>
+            {% if user.is_authenticated and request.user.user_type == 'Specialist' %}
+                <div class='second-itemss specialist'>
+                    <div class='second-item'>
+                        <img src="{% static 'images/second2.png' %}">
+                        <h2>Все <span style='color:rgba(135, 220, 223, 1);'>заказы</span></h2>
+                        <p>Найдите подходящий заказ, кликните на него и договоритесь насчет оплаты  с клиентом напрямую в чате</p>
+                    </div>
+                </div>
+                <div class='second-block-button-container'>
+                    <a href='/all_orders' class='second-block-button'>Смотреть</a>
+                </div>
+            {% else %}
+
             <div style='display:flex;'>
                 <div id='second-block-texts'>
                     <h1 style='font-weight: 600;font-size: 67px;'>Забота, которая приносит <span style='color:rgba(135, 220, 223, 1);'>комфорт</span> и <span style='color:rgba(135, 220, 223, 1);'>спокойствие</span></h1>
@@ -93,6 +153,7 @@
             <div class='second-hand'>
                 <img src="{% static 'images/second1.png' %}" id='hands-img2'>
             </div>
+            {% endif %}
         </div>
 
     </div>

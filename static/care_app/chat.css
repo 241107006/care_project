@@ -225,6 +225,53 @@ h1.nochats {
     clear: both;
 }
 
+.order_request {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+}
+.order_request_container {
+    border-radius: 15px;
+    background-color: #f1f1f1;
+    padding: 30px 40px;
+    width: 70%;
+}
+.order_request a {
+    text-decoration: none;
+    font-size: 22px;
+}
+.order_request p {
+    font-size: 18px;
+    margin: 15px 0;
+}
+.request_buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+.request_buttons button {
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    border-radius: 10px;
+    height: 50px;
+    padding: 0 30px;
+    font-family: 'Monsterrat';
+    cursor: pointer;
+}
+.request_accept {
+    background-color: #000;
+    color: white;
+}
+button.request_reject {
+    border: 1px solid black;
+    color: #000;
+}
+
 /* 1440px - Large screens */
 @media screen and (max-width: 1440px) {
     .content {
@@ -352,6 +399,13 @@ h1.nochats {
     }
     #margins {
         margin: 100px;
+    }
+    .order_request_container {
+        padding: 20px 30px;
+    }
+    .request_buttons {
+        flex-direction: column;
+        gap: 10px;
     }
 }
 

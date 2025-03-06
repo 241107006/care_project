@@ -4,11 +4,20 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.hashers import make_password
 from django.db.models import Q
-from .models import Order, SMSCode, CustomUser, Notification, Chat, Message, OrderTaken
+from .models import Order, SMSCode, CustomUser, Notification, Chat, Message, OrderTaken, PasswordCode
 from .forms import ClientForm
 import random
-from datetime import datetime
+import string
+from django.utils import timezone
+from datetime import datetime, timedelta
 from django.views.decorators.csrf import csrf_exempt
+from dotenv import load_dotenv
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from django.conf import settings
+import os
+
 
 def home(request):
     return render(request, 'home.html')
@@ -30,7 +39,10 @@ def login_view(request):
         if user is not None:
             login(request, user)
             return redirect('home')
-        return redirect('login')
+        context = {
+            'error': 'Неправильный логин или пароль'
+        }
+        return render(request, 'authorisation/login.html', context)
         
 
 def register_view(request):
@@ -162,6 +174,98 @@ def register_view(request):
     
     return render(request, 'authorisation/register.html', context)
 
+def generate_random_code(length=6):
+    characters = string.ascii_uppercase + string.digits
+    return ''.join(random.choice(characters) for _ in range(length))
+
+def send_email_with_gmail(subject, body, to_email):
+    from_email = settings.EMAIL_HOST_USER 
+    password = settings.EMAIL_HOST_PASSWORD
+    msg = MIMEMultipart()
+    msg['From'] = from_email
+    msg['To'] = to_email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(body, 'plain'))
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.login(from_email, password)
+
+        server.sendmail(from_email, to_email, msg.as_string())
+        server.close()
+        print("Email sent successfully.")
+    except Exception as e:
+        print(f"Failed to send email. Error: {e}")
+
+def send_password_reset_email(email, code):
+    subject = "Восстановления пароля"
+    message = f"Ваша ссылка на восстановление пароля: http://zabotaplus.kz:8000/password_recovery/{code}"
+    from_email = "no-reply@zabotaplus.kz"
+    send_email_with_gmail(subject, message, email)
+
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email', '')
+        user = get_object_or_404(CustomUser, email=email)
+        if not user:
+            return render(request, 'authorisation/forgot_password.html', {'error': 'Почта не найдена'})
+        PasswordCode.objects.filter(expiration__lt=timezone.now()).delete()
+        
+        code = generate_random_code()
+        expiration_time = timezone.now() + timedelta(minutes=60)
+        existing_code = PasswordCode.objects.filter(email=email).first()
+        if existing_code:
+            existing_code.code = code
+            existing_code.save()
+        else:
+            password_code = PasswordCode.objects.create(
+                user=user,
+                email=user.email,
+                code=code,
+                expiration=expiration_time
+            )
+        send_password_reset_email(user.email, code)
+        
+        return redirect('forgot_password_success', user.id)
+    
+    return render(request, 'authorisation/forgot_password.html')
+
+def forgot_password_success(request, user_id):
+    send_email_with_gmail('a', 'b', '200103395@stu.sdu.edu.kz')
+    user = get_object_or_404(CustomUser, id=user_id)
+    return render(request, 'authorisation/forgot_password_success.html', {'email': user.email})
+
+def password_recovery(request, code):
+    PasswordCode.objects.filter(expiration__lt=timezone.now()).delete()
+    context = {}
+    if request.method == 'POST':
+        password = request.POST.get('password', '')
+        password2 = request.POST.get('password2', '')
+        
+        if not password or not password2:
+            context['error'] = "Both password fields are required."
+            return render(request, 'authorisation/password_recovery.html', context)
+        if password != password2:
+            context['error'] = "Passwords do not match."
+            return render(request, 'authorisation/password_recovery.html', context)
+        rec_code = get_object_or_404(PasswordCode, code=code)
+        if not rec_code:
+            return redirect('home')
+        user = rec_code.user
+        if not user:
+            return redirect('home')
+        PasswordCode.objects.filter(expiration__lt=timezone.now()).delete()
+        
+        existing_code = PasswordCode.objects.filter(email=email).first()
+        user.set_password(password)
+        
+        return redirect('login', user.id)
+    
+    return render(request, 'authorisation/password_recovery.html')
+
+
 def logout_view(request):
     logout(request)
     return redirect('home')
@@ -219,9 +323,13 @@ def my_orders(request):
     return render(request, 'my_taken_orders.html', {'orders': orders_list})
 
 def all_orderds(request):
-    orders = Order.objects.filter(status='В ожидании').exclude(author=request.user)
+    task_name = request.GET.get('task_name')
+    if task_name:
+        orders = Order.objects.filter(status='В ожидании', task_name=task_name).exclude(author=request.user)
+    else:
+        orders = Order.objects.filter(status='В ожидании').exclude(author=request.user)
     #<a href="{% url 'order_accept' order.id %}" class="btn btn-primary">Просмотреть</a>
-    return render(request, 'all_orders.html', {'orders': orders})
+    return render(request, 'all_orders.html', {'orders': orders, 'task_name': task_name})
 
 def order_accept(request, order_id):
     if not request.user.is_authenticated:
@@ -232,9 +340,10 @@ def order_accept(request, order_id):
     OrderTaken.objects.create(
         order=order,
         specialist=request.user,
+        client=order.author,
     )
-    order.status = 'Принято'
-    order.save()
+    # order.status = 'Принято'
+    # order.save()
     chat = Chat.objects.filter(
     (Q(user1=request.user, user2=order.author) | Q(user1=order.author, user2=request.user))).first()
     if not chat:
@@ -242,11 +351,65 @@ def order_accept(request, order_id):
     Notification.objects.create(
         user = order.author,
         name = 'На вашу заявку откликнулись!',
-        text = 'Перейдите по кнопке, чтобы связаться с клиентом',
+        text = 'Перейдите по кнопке, чтобы связаться с специалистом',
         action = f'/chat/{chat.id}',
         action_name = 'Связаться'
     )
     return redirect('order_detail', order_id=order.id)
+
+def order_finish(request, order_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    order = get_object_or_404(Order, id=order_id)
+    if not order or order.author != request.user:
+        return redirect('my_orders')
+    order.status = 'Выполнено'
+    order.save()
+    return redirect('my_orders')
+
+def order_request_reject(request, request_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    order_request = get_object_or_404(OrderTaken, id=request_id)
+    print(order_request.client, request.user)
+    if not order_request or order_request.client != request.user:
+        return redirect('chats')
+    order_request.status = 'Отказано'
+    order_request.save()
+    
+    chat = Chat.objects.filter(
+    (Q(user1=request.user, user2=order_request.specialist) | Q(user1=order_request.specialist, user2=request.user))).first()
+    print('isChat', chat)
+    if chat:
+        return redirect('chat', chat_id=chat.id)
+    return redirect('chats')
+    
+def order_request_accept(request, request_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    order_request = get_object_or_404(OrderTaken, id=request_id)
+    if not order_request or order_request.client != request.user:
+        return redirect('chats')
+    order = order_request.order
+    if not order or order.status != 'В ожидании':
+        return redirect('chats')
+    order.status = 'Принято'
+    order.save()
+    
+    order_request.status = 'Принято'
+    order_request.save()
+    
+    requests = OrderTaken.objects.filter(order=order, status='В ожидании')
+    for req in requests:
+        req.status = 'Отказано'
+        req.save()
+    
+    chat = Chat.objects.filter(
+    (Q(user1=request.user, user2=order_request.specialist) | Q(user1=order_request.specialist, user2=request.user))).first()
+    
+    if chat:
+        return redirect('chat', chat_id=chat.id)
+    return redirect('chats')
 
 def order_detail(request, order_id):
     order = Order.objects.get(id=order_id)
@@ -344,7 +507,6 @@ def chat(request, chat_id):
     chat = Chat.objects.filter(id=chat_id).first()
     if not chat or (chat.user1 != request.user and chat.user2 != request.user):
         return HttpResponse("Invalid chat<br><a href='/'>Home</a>", status=400)
-    
     chats = Chat.objects.filter(Q(user1=request.user) | Q(user2=request.user))
     chat_list = []
     for chati in chats:
@@ -357,7 +519,17 @@ def chat(request, chat_id):
         })
     messages = Message.objects.filter(chat_id=chat)
     companion = chat.user1 if request.user == chat.user2 else chat.user2
-    return render(request, 'chat.html', {'chats': chat_list, 'current': chat, 'messages': messages, 'companion': companion})
+    requests = OrderTaken.objects.filter(client=request.user, specialist=companion, status='В ожидании')
+    print(requests)
+    context = {
+        'chats': chat_list,
+        'current': chat,
+        'messages': messages,
+        'companion': companion,
+        'requests': requests
+    }
+    
+    return render(request, 'chat.html', context)
 
 def notifications(request):
     if not request.user.is_authenticated:

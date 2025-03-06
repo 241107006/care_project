@@ -135,6 +135,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
 }
 
+.error {
+    margin-left: 48px;
+}
+.error p {
+    font-size: 20px;
+    color: red;
+}
+
 @media screen and (max-width: 1024px) {
     .register-box {
         width: 80%;
@@ -207,6 +215,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .register-box label {
         font-size: 20px;
     }
+    .error p {
+        font-size: 18px;
+    }
 }
 
 /* Extra small phones (360px and below) */
@@ -240,4 +251,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 18px;
     }
 
+    .error p {
+        font-size: 14px;
+    }
 }

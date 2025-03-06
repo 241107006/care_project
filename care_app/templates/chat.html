@@ -75,6 +75,19 @@
                         </div>
                         {% endif %}
                     {% endfor %}
+
+                    {% for req in requests %}
+                        <div class='order_request'>
+                            <div class='order_request_container'>
+                                <a href='/order/{{req.order.id}}'>Заказ: {{ req.order.task_name }}</a>
+                                <p>На вашу заявку откликнулся специалист.</p>
+                                <div class='request_buttons'>
+                                    <a href='/order_request/{{req.id}}/accept'><button class='request_accept'>Принять</button></a>
+                                    <a href='/order_request/{{req.id}}/reject'><button class='request_reject'>Отказать</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
                 <form id='form' method='post' enctype="multipart/form-data">
                 {% csrf_token %}

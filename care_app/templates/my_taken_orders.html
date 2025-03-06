@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Мои заказы</title>
         <link rel="stylesheet" href="{% static 'care_app/header.css' %}">
-        <link rel="stylesheet" href="{% static 'care_app/my_orders.css' %}">
+        <link rel="stylesheet" href="{% static 'care_app/my_taken_orders.css' %}">
         <style>
             @font-face {
                 font-family: 'PTSans';
@@ -34,12 +34,15 @@
         </div>
         <div class='block'>
             <div class='top'>
-                <p>История принятия заявок</p></div>
+                <p>История принятия заказов</p></div>
             {% for order in orders %}
             <a href='/order/{{order.order.id}}?action=my_orders' style='text-decoration:none;color:inherit;'><div class='order'>
                 <div class='texts'>
                     <p class='not-top'>{{order.order.task_name}}</p>
                     <div style='display:flex;'><img src="{% static 'images/mark.png'%}"><p class='not-bot'>{{order.order.address}}</p></div>
+                </div>
+                <div class='status'>
+                    <p class='status-text'>Статус: {{order.order_taken.status}}</p>
                 </div>
                 <div class='dates'>
                     <p class='data'>Дата</p>

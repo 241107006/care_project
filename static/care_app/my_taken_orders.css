@@ -1,0 +1,326 @@
+body {
+    margin: 0;
+    font-family: Monsterrat;
+}
+.content {
+    margin-top: 52px;
+    display: flex;
+    justify-content: center;
+    gap: 29px;
+    height: auto;
+}
+.links {
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 360px;
+}
+.links a {
+    text-decoration: none;
+    color: black;
+    align-items: center;
+    height: 44px;
+    display: flex;
+    font-size: 20px;
+}
+.checked {
+    border-radius: 10px;
+    padding-left: 30px;
+    width: 330px;
+    background-color: rgba(217, 217, 217, 1);
+}
+
+.block {
+    font-family: Roboto;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(191, 190, 190, 1);
+    background: rgba(255, 255, 255, 1);
+    width: 937px;
+    height: 583px;
+    border-radius: 10px;
+    overflow-y: scroll;
+}
+.block p {
+    margin: 0;
+}
+.block h1 {
+    margin: 0;
+}
+.block::-webkit-scrollbar {
+    display: none;
+}
+.top {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(191, 190, 190, 1);
+}
+.top p {
+    margin-left: 33px;
+    font-size: 24px;
+    font-weight: 400;
+}
+.order {
+    height: 120px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.horizontal {
+    display: flex;
+    justify-content: center;
+}
+.horizontal div {
+    height: 1px;
+    width: 899px;
+    background-color: rgba(191, 190, 190, 1);
+}
+.texts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-x: hidden;
+    width: 300px;
+    margin-left: 75px;
+    gap: 5px;
+}
+.texts img {
+    height: 17px;
+    width: 14px;
+    margin-right: 2px;
+}
+.status {
+    width: 300px;
+}
+.not-top {
+    font-weight: 400;
+    font-size: 24px;
+}
+.not-bot {
+    font-weight: 400;
+    font-size: 20px;
+}
+.dates {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 18px;
+    gap: 5px;
+    align-items: center;
+}
+.dates p {
+    font-size: 14px;
+}
+p.data {
+    font-size: 20px;
+}
+
+.add-order div {
+    display: flex;
+    justify-content: center;
+}
+.add-order img {
+    width: 100px;
+}
+.status-text {
+    font-size: 20px;
+}
+
+/* 1440px - Large screens */
+@media screen and (max-width: 1440px) {
+    .content {
+        gap: 20px;
+    }
+    .block {
+        width: 800px;
+    }
+}
+
+/* 1024px - Tablets landscape */
+@media screen and (max-width: 1024px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+    }
+    
+    .links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 8px;
+    }
+    
+    .links a {
+        width: auto;
+        padding: 0 15px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .checked {
+        width: auto;
+        padding: 0 20px;
+    }
+    
+    .block {
+        width: 90%;
+        height: 500px;
+    }
+    
+    .texts {
+        margin-left: 40px;
+        width: 40%;
+    }
+    .status {
+        width: 20%;
+    }
+}
+
+/* 768px - Tablets portrait */
+@media screen and (max-width: 768px) {
+    .top p {
+        font-size: 20px;
+    }
+    
+    .order {
+        height: 100px;
+    }
+    
+    .texts {
+        margin-left: 30px;
+        width: 50%;
+    }
+    .status {
+        width: 20%;
+    }
+    .status-text {
+        
+        font-size: 16px;
+    }
+    
+    .not-top {
+        font-size: 20px;
+    }
+    
+    .not-bot {
+        font-size: 16px;
+    }
+    
+    .dates p.data {
+        font-size: 18px;
+    }
+    
+    .horizontal div {
+        width: 85%;
+    }
+    .add-order img {
+        width: 80px;
+    }
+}
+
+/* 480px - Mobile landscape */
+@media screen and (max-width: 480px) {
+    .content {
+        margin-top: 20px;
+    }
+    
+    .links a {
+        font-size: 16px;
+        height: 35px;
+    }
+    
+    .block {
+        width: 95%;
+        height: 400px;
+    }
+    
+    .top {
+        height: 70px;
+    }
+    
+    .top p {
+        margin-left: 20px;
+        font-size: 18px;
+    }
+    
+    .texts {
+        margin-left: 20px;
+        width: 50%;
+    }
+
+    .status {
+        width: 20%;
+    }
+    
+    .not-top {
+        font-size: 18px;
+    }
+    
+    .dates {
+        margin-left: 10px;
+    }
+    
+    .dates p.data {
+        font-size: 16px;
+    }
+    
+    .horizontal div {
+        width: 90%;
+    }
+}
+
+/* 360px - Mobile portrait */
+@media screen and (max-width: 360px) {
+    .links a {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+    
+    .block {
+        width: 100%;
+        border-radius: 0;
+    }
+    
+    .top p {
+        font-size: 16px;
+    }
+    
+    .texts {
+        margin-left: 15px;
+        width: 40%;
+    }
+
+    .status {
+        width: 20%;
+    }
+    
+    .not-top {
+        font-size: 16px;
+    }
+    
+    .not-bot {
+        font-size: 14px;
+    }
+    
+    .dates p {
+        font-size: 12px;
+    }
+    
+    .dates p.data {
+        font-size: 14px;
+    }
+    
+    .order {
+        height: 80px;
+    }
+    
+    .horizontal div {
+        width: 95%;
+    }
+}
