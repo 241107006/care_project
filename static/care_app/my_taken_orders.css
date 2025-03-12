@@ -130,6 +130,26 @@ p.data {
     font-size: 20px;
 }
 
+#not_count {
+    background-color: #cf0000;
+    color: white;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media screen and (max-width: 480px) {
+    #not_count {
+        height: 20px;
+        width: 20px;
+        font-size: 11px;
+    }
+}
 /* 1440px - Large screens */
 @media screen and (max-width: 1440px) {
     .content {

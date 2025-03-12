@@ -29,7 +29,7 @@
             <a href='/my_orders'>История заявок</a>
             <a href='/chats' class='checked' disabled>Чат-поддержка</a>
             <a href='/profile'>Настройки профиля</a>
-            <a href='/notifications'>Уведомления</a>
+            <a href='/notifications'>Уведомления {% if notifications_count %}<span id='not_count'>{{notifications_count}}</span>{%endif%} </a>
             <a href='/logout'>Выйти</a>
         </div>
         <div class='block'>

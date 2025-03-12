@@ -208,7 +208,8 @@ def send_password_reset_email(email, code):
 def forgot_password(request):
     if request.method == 'POST':
         email = request.POST.get('email', '')
-        user = get_object_or_404(CustomUser, email=email)
+        user = CustomUser.objects.filter(email=email).first()
+        # user = get_object_or_404(CustomUser, email=email)
         if not user:
             return render(request, 'authorisation/forgot_password.html', {'error': 'Почта не найдена'})
         PasswordCode.objects.filter(expiration__lt=timezone.now()).delete()
@@ -218,7 +219,7 @@ def forgot_password(request):
         existing_code = PasswordCode.objects.filter(email=email).first()
         if existing_code:
             existing_code.code = code
-            existing_code.save()
+            existing_code.save() 
         else:
             password_code = PasswordCode.objects.create(
                 user=user,
@@ -233,13 +234,16 @@ def forgot_password(request):
     return render(request, 'authorisation/forgot_password.html')
 
 def forgot_password_success(request, user_id):
-    send_email_with_gmail('a', 'b', '200103395@stu.sdu.edu.kz')
     user = get_object_or_404(CustomUser, id=user_id)
     return render(request, 'authorisation/forgot_password_success.html', {'email': user.email})
 
 def password_recovery(request, code):
     PasswordCode.objects.filter(expiration__lt=timezone.now()).delete()
     context = {}
+    rec_code = PasswordCode.objects.filter(code=code).first()
+    if not rec_code:
+        context['recovery_error'] = 'Срок действия кода восстановления пароля истек'
+        return render(request, 'authorisation/password_recovery.html', context)
     if request.method == 'POST':
         password = request.POST.get('password', '')
         password2 = request.POST.get('password2', '')
@@ -250,18 +254,15 @@ def password_recovery(request, code):
         if password != password2:
             context['error'] = "Passwords do not match."
             return render(request, 'authorisation/password_recovery.html', context)
-        rec_code = get_object_or_404(PasswordCode, code=code)
-        if not rec_code:
-            return redirect('home')
         user = rec_code.user
         if not user:
             return redirect('home')
-        PasswordCode.objects.filter(expiration__lt=timezone.now()).delete()
         
-        existing_code = PasswordCode.objects.filter(email=email).first()
+        rec_code.delete()
         user.set_password(password)
+        user.save()
         
-        return redirect('login', user.id)
+        return redirect('login')
     
     return render(request, 'authorisation/password_recovery.html')
 
@@ -311,7 +312,7 @@ def my_orders(request):
         return redirect('login')
     if request.user.user_type == 'Client':
         orders = Order.objects.filter(author=request.user)
-        return render(request, 'my_orders.html', {'orders': orders})
+        return render(request, 'my_orders.html', {'orders': orders, 'notifications_count': notifications_count(request)})
     orders_taken = OrderTaken.objects.filter(specialist=request.user).all()
     orders_list = []
     for order_taken in orders_taken:
@@ -320,7 +321,7 @@ def my_orders(request):
             'order': order,
             'order_taken': order_taken,
         })
-    return render(request, 'my_taken_orders.html', {'orders': orders_list})
+    return render(request, 'my_taken_orders.html', {'orders': orders_list, 'notifications_count': notifications_count(request)})
 
 def all_orderds(request):
     task_name = request.GET.get('task_name')
@@ -336,7 +337,13 @@ def order_accept(request, order_id):
         return redirect('login')
     if request.user.user_type != 'Specialist':
         return redirect('home')
-    order = get_object_or_404(Order, id=order_id)
+    order = Order.objects.filter(id=order_id).first()
+    if not order:
+        return redirect('home')
+    orderTaken = OrderTaken.objects.filter(order=order, specialist=request.user, client=order.author).first()
+    if orderTaken:
+        return redirect('order_detail', order_id=order.id)
+    
     OrderTaken.objects.create(
         order=order,
         specialist=request.user,
@@ -360,7 +367,7 @@ def order_accept(request, order_id):
 def order_finish(request, order_id):
     if not request.user.is_authenticated:
         return redirect('login')
-    order = get_object_or_404(Order, id=order_id)
+    order = Order.objects.filter(id=order_id).first()
     if not order or order.author != request.user:
         return redirect('my_orders')
     order.status = 'Выполнено'
@@ -370,7 +377,7 @@ def order_finish(request, order_id):
 def order_request_reject(request, request_id):
     if not request.user.is_authenticated:
         return redirect('login')
-    order_request = get_object_or_404(OrderTaken, id=request_id)
+    order_request = OrderTaken.objects.filter(id=request_id).first()
     print(order_request.client, request.user)
     if not order_request or order_request.client != request.user:
         return redirect('chats')
@@ -387,7 +394,7 @@ def order_request_reject(request, request_id):
 def order_request_accept(request, request_id):
     if not request.user.is_authenticated:
         return redirect('login')
-    order_request = get_object_or_404(OrderTaken, id=request_id)
+    order_request = OrderTaken.objects.filter(id=request_id).first()
     if not order_request or order_request.client != request.user:
         return redirect('chats')
     order = order_request.order
@@ -427,8 +434,14 @@ def order_success(request, order_id):
 def read_notifications(user):
     notifications = Notification.objects.filter(user=user)
     for notification in notifications:
-        notification.read = 'read'
+        notification.read = True
         notification.save()
+        
+def notifications_count(request):
+    if not request.user.is_authenticated:
+        return 0
+    notifications = Notification.objects.filter(user=request.user, read=False)
+    return notifications.count()
         
 @csrf_exempt
 @login_required
@@ -483,7 +496,7 @@ def profile(request):
         user.save()
     # notifications
     document_is_pdf = request.user.document and request.user.document.name.lower().endswith('.pdf')
-    return render(request, 'profile.html', {'document_is_pdf': document_is_pdf})
+    return render(request, 'profile.html', {'document_is_pdf': document_is_pdf, 'notifications_count': notifications_count(request)})
     
     
 def chats(request):
@@ -499,7 +512,7 @@ def chats(request):
             'other_user': other_user,
             'last_message': last_message,
         })
-    return render(request, 'chats.html', {'chats': chat_list})
+    return render(request, 'chats.html', {'chats': chat_list, 'notifications_count': notifications_count(request)})
 
 def chat(request, chat_id):
     if not request.user.is_authenticated:
@@ -526,7 +539,8 @@ def chat(request, chat_id):
         'current': chat,
         'messages': messages,
         'companion': companion,
-        'requests': requests
+        'requests': requests,
+        'notifications_count': notifications_count(request)
     }
     
     return render(request, 'chat.html', context)
@@ -534,14 +548,8 @@ def chat(request, chat_id):
 def notifications(request):
     if not request.user.is_authenticated:
         return redirect('login')
-    '''Notification.objects.create(
-        user=request.user,
-        name = 'На вашу заявку откликнулись!', 
-        text = 'Перейдите по кнопке, чтобы связаться с клиентом',
-        action = '/chat/1',
-        action_name = 'Связаться '
-    )'''
     notifications = Notification.objects.filter(user=request.user)
+    print(notifications)
     read_notifications(request.user)
     return render(request, 'notifications.html', {'notifications': notifications})
 

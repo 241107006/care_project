@@ -1,11 +1,7 @@
 from django.contrib import admin
 from django.apps import apps
-from .models import Order
-
-admin.site.register(Order)
-
+from .models import Order, CustomUser
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
     list_display = ('phone', 'email', 'name', 'surname', 'user_type', 'is_active', 'is_staff')
@@ -25,6 +21,17 @@ class CustomUserAdmin(UserAdmin):
 
     search_fields = ('phone', 'email', 'name', 'surname')
     ordering = ('email',)
+    
+class CompletedOrderAdmin(admin.ModelAdmin):
+    list_display = ('task_name', 'author', 'full_name', 'phone', 'created_at', 'status')
+    list_filter = ('status', 'created_at')
+    search_fields = ('task_name', 'full_name', 'phone')
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(status='Выполнено')
+
+admin.site.register(Order, CompletedOrderAdmin)
 
 admin.site.register(CustomUser, CustomUserAdmin)
 
