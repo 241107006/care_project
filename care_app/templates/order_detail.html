@@ -23,8 +23,12 @@
 <body>
     {% include 'header.html' %}
     <div class='content'>
+        <div>
         <h1>Детали заказа</h1>
-
+        {% if no_review %}
+        <div style='display:flex;justify-content:center;'><a href='/create_review/{{order.id}}' class='accept'>Оставить отзыв</a></div>
+        {% endif %}
+        </div>
         <div class="order-details">
             <h3>{{ order.task_name }}</h3>
             <p><strong>Кому нужна помощь:</strong> {{ order.help_for }}</p>

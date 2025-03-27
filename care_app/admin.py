@@ -29,7 +29,7 @@ class CompletedOrderAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(status='Выполнено')
+        return qs.filter()
 
 admin.site.register(Order, CompletedOrderAdmin)
 

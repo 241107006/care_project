@@ -41,6 +41,9 @@
                     <p class='not-top'>{{order.task_name}}</p>
                     <div style='display:flex;'><img src="{% static 'images/mark.png'%}"><p class='not-bot'>{{order.address}}</p></div>
                 </div>
+                <div class='status'>
+                    <p class='data'>{{order.status}}</p>
+                </div>
                 <div class='dates'>
                     <p class='data'>Дата</p>
                     <p>{{order.created_at|date:'H:i'}}</p>

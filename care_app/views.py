@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.hashers import make_password
 from django.db.models import Q
-from .models import Order, SMSCode, CustomUser, Notification, Chat, Message, OrderTaken, PasswordCode
+from .models import Review, Order, SMSCode, CustomUser, Notification, Chat, Message, OrderTaken, PasswordCode
 from .forms import ClientForm
 import random
 import string
@@ -372,7 +372,7 @@ def order_finish(request, order_id):
         return redirect('my_orders')
     order.status = 'Выполнено'
     order.save()
-    return redirect('my_orders')
+    return redirect('create_review', order.id)
 
 def order_request_reject(request, request_id):
     if not request.user.is_authenticated:
@@ -406,6 +406,18 @@ def order_request_accept(request, request_id):
     order_request.status = 'Принято'
     order_request.save()
     
+    chat = Chat.objects.filter(
+    (Q(user1=order_request.specialist, user2=order.author) | Q(user1=order.author, user2=order_request.specialist))).first()
+    if not chat:
+        chat = Chat.objects.create(user1=order_request.specialist, user2=order.author)
+    Notification.objects.create(
+        user = order_request.specialist,
+        name = 'Клиент принял запрос!',
+        text = 'Перейдите по кнопке, чтобы связаться с клиентом',
+        action = f'/chat/{chat.id}',
+        action_name = 'Связаться'
+    )
+    
     requests = OrderTaken.objects.filter(order=order, status='В ожидании')
     for req in requests:
         req.status = 'Отказано'
@@ -422,9 +434,16 @@ def order_detail(request, order_id):
     order = Order.objects.get(id=order_id)
     action = request.GET.get('action')
     isMine = False
+    no_review = False
     if request.user:
         isMine = order.author == request.user
-    return render(request, 'order_detail.html', {'order': order, 'action': action, 'isMine': isMine})
+    if isMine:
+        review = Review.objects.filter(order=order).first()
+        no_review = False if review else True
+        if order.status != 'Выполнено':
+            no_review = False
+        no_review = True
+    return render(request, 'order_detail.html', {'no_review': no_review, 'order': order, 'action': action, 'isMine': isMine})
 
 def order_success(request, order_id):
     # If not my order redirect
@@ -498,6 +517,34 @@ def profile(request):
     document_is_pdf = request.user.document and request.user.document.name.lower().endswith('.pdf')
     return render(request, 'profile.html', {'document_is_pdf': document_is_pdf, 'notifications_count': notifications_count(request)})
     
+def profile_view(request, user_id):
+    user = CustomUser.objects.filter(id=user_id).first()
+    if not user:
+        return redirect('profile')
+    print(user)
+    reviews = Review.objects.filter(client=user_id)
+    document_is_pdf = request.user.document and request.user.document.name.lower().endswith('.pdf')
+    return render(request, 'profile_view.html', {'user': user, 'document_is_pdf': document_is_pdf, 'notifications_count': notifications_count(request), 'reviews': reviews})
+    
+def create_review(request, order_id):
+    order = Order.objects.filter(id=order_id).first()
+    context = {}
+    if not order:
+        return redirect('my_orders')
+    if order.author != request.user:
+        return redirect('my_orders')
+    if request.method == 'POST':
+        text = request.POST['text']
+        star = request.POST['star']
+        Review.objects.create(
+            order=order,
+            client=request.user,
+            text=text,
+            star=star
+        )
+        return redirect('my_orders')
+    context['order'] = order
+    return render(request, 'create_review.html', context)
     
 def chats(request):
     if not request.user.is_authenticated:

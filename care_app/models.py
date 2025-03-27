@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.core.validators import FileExtensionValidator
 
@@ -176,6 +177,12 @@ class OrderTaken(models.Model):
         ],
         default='В ожидании'
     )
+    
+class Review(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True, related_name='reviews')
+    client = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name='reviews')
+    star = models.PositiveIntegerField(verbose_name='Звезды', null=True, blank=True)
+    text = models.TextField()
 
     # = models.OneToOneField(Model, on_delete=models.CASCADE, related_name='')
     # = models.ForeignKey(Model, on_delete=models.CASCADE, related_name='')

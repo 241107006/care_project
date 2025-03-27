@@ -36,10 +36,10 @@
             <div class='vertical-line'></div>
             <div class='top'>
                 <div class='search-container'><input type='text' class='search' placeholder='Поиск чатов'></div>
-                <div class='chat-info'>
+                <a href='/profile_view/{{companion.id}}' style='color:inherit;text-decoration:none;'><div class='chat-info'>
                     <img src="{%if companion.profile_picture%}{{companion.profile_picture.url}}{%endif%}" onerror="this.src='{% static 'images/fallback.png' %}'">
                     <p>{{companion.name}} {{companion.surname}}</p>
-                </div>
+                </div></a>
             </div>
             <div style='display:flex;'>
             <div class='left'>

@@ -139,6 +139,37 @@ p.data {
     justify-content: center;
     align-items: center;
 }
+.block {
+    padding: 28px 36px;
+}
+form {
+    width: 100%;
+    height: 100%;
+}
+textarea {
+    font-size: 16px;
+    width: 100%;
+    height: 100px;
+}
+.stars {
+    display: flex;
+    justify-content: end;
+}
+button {
+    height: 41px;
+    width: 215px;
+    background-color: rgba(75, 86, 85, 1);
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
 @media screen and (max-width: 480px) {
     #not_count {
         height: 20px;

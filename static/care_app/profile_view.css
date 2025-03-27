@@ -1,0 +1,394 @@
+body {
+    margin: 0;
+    font-family: Monsterrat;
+}
+.content {
+    margin-top: 52px;
+    display: flex;
+    justify-content: center;
+    gap: 29px;
+}
+.links {
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 360px;
+}
+.links a {
+    text-decoration: none;
+    color: black;
+    align-items: center;
+    height: 44px;
+    display: flex;
+    font-size: 20px;
+}
+.checked {
+    border-radius: 10px;
+    padding-left: 30px;
+    width: 330px;
+    background-color: rgba(217, 217, 217, 1);
+}
+
+.profile {
+    height: 683px;
+    width: 937px;
+    border: 1px solid rgba(191, 190, 190, 1);
+    border-radius: 10px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-family: Roboto;
+}
+.profile p {
+    margin: 0;
+}
+.profile h1 {
+    margin: 0;
+}
+.pfp {
+    display: flex;
+}
+.pfp img {
+    margin: 15px 0 0 115px;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.pfp div {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 33px 0 0 65px;
+}
+.pfp h1 {
+    font-weight: 600;
+    font-size: 24px;
+    margin: 0;
+}
+.pfp p {
+    font-size: 20px;
+    margin: 0;
+}
+.profile form {
+    margin: 38px 0 0 115px;
+    padding-bottom: 20px;
+}
+.top {
+    display: flex;
+    gap: 50px;
+    margin-top: 15px;
+}
+.top p {
+    font-weight: 300;
+    font-size: 20px;
+    margin-bottom: 9px;
+}
+input {
+    border: 1px solid rgba(191, 190, 190, 1);
+    border-radius: 10px;
+    padding: 0 18px;
+    width: 180px;
+    height: 35px;
+}
+select {
+    border: 1px solid rgba(191, 190, 190, 1);
+    border-radius: 10px;
+    padding: 0 18px;
+    width: 180px;
+    height: 35px;
+}
+.nottop p {
+    margin: 17px 0 15px 0;
+    font-weight: 600;
+    font-size: 20px;
+}
+.buttons {
+    margin-top: 37px;
+    display: flex;
+    gap: 20px;
+}
+.buttons button {
+    height: 41px;
+    width: 215px;
+    background-color: rgba(75, 86, 85, 1);
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+.buttons a {
+    text-decoration: none;
+    height: 41px;
+    width: 215px;
+    border: 1px solid rgba(168, 164, 164, 1);
+    border-radius: 10px;
+    color: rgba(168, 164, 164, 1);
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+.upload {
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+
+#not_count {
+    background-color: #cf0000;
+    color: white;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviews {
+    display: flex;
+    align-items: center;
+    margin-left: -35px;
+    gap: 16px;
+    margin-top: 18px;
+}
+.review {
+    border: 1px solid #BFBEBE;
+    border-radius: 10px;
+    padding: 17px 37px;
+    width: 675px;
+}
+.stars {
+    margin-top: 9px;
+    display: flex;
+    justify-content: end;
+}
+
+@media screen and (max-width: 480px) {
+    #not_count {
+        height: 20px;
+        width: 20px;
+        font-size: 11px;
+    }
+}
+
+/* 1440px - Large screens */
+@media screen and (max-width: 1440px) {
+    .content {
+        gap: 20px;
+    }
+    .profile {
+        width: 820px;
+    }
+    .pfp img {
+        margin-left: 80px;
+    }
+    .profile form {
+        margin-left: 80px;
+        margin-bottom: 20px;
+    }
+    .review {
+        width: 590px;
+    }
+}
+
+/* 1024px - Tablets landscape */
+@media screen and (max-width: 1024px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+    }
+    
+    .links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 8px;
+    }
+    
+    .links a {
+        width: auto;
+        padding: 0 15px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .checked {
+        width: auto;
+        padding: 0 20px;
+    }
+    
+    .profile {
+        width: 90%;
+        height: auto;
+        padding-bottom: 30px;
+    }
+    
+    .pfp {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .pfp img {
+        margin: 15px 0 0 0;
+    }
+    
+    .pfp div {
+        margin: 20px 0 0 0;
+    }
+    
+    .profile form {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    
+    .top {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .reviews {
+        width: 100%;
+        margin-left: 0px;
+    }
+    .review {
+        width: auto;
+    }
+}
+
+/* 768px - Tablets portrait */
+@media screen and (max-width: 768px) {
+    .profile {
+        width: 95%;
+    }
+    
+    .pfp img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .pfp h1 {
+        font-size: 20px;
+    }
+    
+    .pfp p {
+        font-size: 16px;
+    }
+    
+    .top {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    input, select {
+        width: 90%;
+    }
+    
+    .nottop p {
+        font-size: 18px;
+    }
+    
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .buttons button,
+    .buttons a {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* 480px - Mobile landscape */
+@media screen and (max-width: 480px) {
+    .content {
+        margin-top: 20px;
+    }
+    
+    .links a {
+        font-size: 16px;
+        padding: 0 10px;
+    }
+    
+    .pfp img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .pfp h1 {
+        font-size: 18px;
+    }
+    
+    .pfp p {
+        font-size: 14px;
+    }
+    
+    .nottop p {
+        font-size: 16px;
+    }
+    
+    input, select {
+        height: 30px;
+        font-size: 14px;
+    }
+    
+    .upload {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* 360px - Mobile portrait */
+@media screen and (max-width: 360px) {
+    .links a {
+        font-size: 14px;
+    }
+    
+    .profile {
+        width: 100%;
+        border-radius: 0;
+    }
+    
+    .pfp img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .pfp h1 {
+        font-size: 16px;
+    }
+    
+    .pfp p {
+        font-size: 12px;
+    }
+    
+    .nottop p {
+        font-size: 14px;
+        margin: 12px 0;
+    }
+    
+    .buttons button,
+    .buttons a {
+        height: 35px;
+        font-size: 13px;
+    }
+    
+    .upload {
+        width: 35px;
+        height: 35px;
+    }
+}
