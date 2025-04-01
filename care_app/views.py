@@ -522,9 +522,9 @@ def profile_view(request, user_id):
     if not user:
         return redirect('profile')
     print(user)
-    orders = Order.objects.filter(author=user_id)
-    reviews = Review.objects.filter(order__in=orders)
-    #reviews = Review.objects.filter(client=user_id)
+    #orders = Order.objects.filter(author=user_id)
+    #reviews = Review.objects.filter(order__in=orders)
+    reviews = Review.objects.filter(client=user_id)
     document_is_pdf = request.user.document and request.user.document.name.lower().endswith('.pdf')
     return render(request, 'profile_view.html', {'user': user, 'document_is_pdf': document_is_pdf, 'notifications_count': notifications_count(request), 'reviews': reviews})
     
@@ -535,12 +535,17 @@ def create_review(request, order_id):
         return redirect('my_orders')
     if order.author != request.user:
         return redirect('my_orders')
+        
+    order_taken = OrderTaken.objects.filter(order=order, status='Принято').first()
+    if not order_taken:
+            return redirect('my_orders')
+        
     if request.method == 'POST':
         text = request.POST['text']
         star = request.POST['star']
         Review.objects.create(
             order=order,
-            client=request.user,
+            client=order_taken.specialist,
             text=text,
             star=star
         )
