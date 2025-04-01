@@ -100,7 +100,7 @@
                     </div>
                     <div class='reviews'>
                         <img src="{% static 'images/review_left.png' %}" onclick='press_left()'>
-                        <div class='review' style='display:none'>
+                        <!--<div class='review' style='display:none'>
                             <p>Хороший специалист, быстро выполнил все задачи на высшем уровне, все четко, грамотно и в срок, тактичный, отдельно отмечу внимательномть к деталям и индивидуальный подход - чувствуется, что человек действительно любит свое дело. Спасибо за отличную работу, буду рекомендовать своим знакомым!</p>
                             <div class='stars'>
                                 <img class='star' src="{% static 'images/star_full.png' %}">
@@ -109,7 +109,7 @@
                                 <img class='star' src="{% static 'images/star_full.png' %}">
                                 <img class='star' src="{% static 'images/star_hollow.png' %}">
                             </div>
-                        </div>
+                        </div>-->
                         {% for review in reviews %}
                         <div class='review' id='review-{{ forloop.counter0 }}' {% if not forloop.first %} style='display:none;' {% endif %}>
                             <p>{{ review.text }}</p>
