@@ -12,15 +12,15 @@ WORKDIR /app
 
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install gunicorn
 
 COPY . /app/
 
 EXPOSE 8000
 
 RUN mkdir -p /app/static
+RUN mkdir -p /app/media
 
-RUN python manage.py collectstatic --noinput
+RUN chmod +x /app/start.sh
 
-RUN chmod -R 755 /app/static /app/staticfiles
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["/app/start.sh"]
