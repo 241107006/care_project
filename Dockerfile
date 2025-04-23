@@ -21,6 +21,15 @@ EXPOSE 8000
 RUN mkdir -p /app/static
 RUN mkdir -p /app/media
 
+# Set proper permissions
+RUN chmod -R 755 /app
 RUN chmod +x /app/start.sh
+RUN chown -R root:root /app
+
+# Create a non-root user
+RUN useradd -m appuser
+RUN chown -R appuser:appuser /app
+
+USER appuser
 
 CMD ["/app/start.sh"]
