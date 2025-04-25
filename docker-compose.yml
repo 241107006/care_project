@@ -12,12 +12,6 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=care_project.settings
     tty: true
-    command: >
-      bash -c "python manage.py collectstatic --noinput --clear &&
-               python manage.py migrate &&
-               gunicorn care_project.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120"
-    networks:
-      - app_network
 
 networks:
   app_network:
