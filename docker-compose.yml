@@ -9,6 +9,7 @@ services:
       - .:/app
       - ./static:/app/static
       - ./staticfiles:/app/staticfiles
+      - ./staticfiles:/var/www/zabotaplus.kz/static
     environment:
       - DJANGO_SETTINGS_MODULE=care_project.settings
     tty: true
