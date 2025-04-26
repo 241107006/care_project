@@ -19,7 +19,7 @@ EXPOSE 8000
 
 RUN mkdir -p /app/static
 
-RUN python manage.py collectstatic --noinput
+# RUN python manage.py collectstatic --noinput
 
 RUN chmod -R 755 /app/static /app/staticfiles
 

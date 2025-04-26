@@ -7,9 +7,8 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-      - ./static:/app/static
-      - ./staticfiles:/app/staticfiles
-      - ./static_prod:/var/www/zabotaplus.kz/static
+      - /var/www/zabotaplus.kz/static:/app/staticfiles
+      - /var/www/zabotaplus.kz/media:/app/media
     environment:
       - DJANGO_SETTINGS_MODULE=care_project.settings
     tty: true
