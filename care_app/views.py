@@ -349,8 +349,27 @@ def order_accept(request, order_id):
         specialist=request.user,
         client=order.author,
     )
-    # order.status = 'Принято'
-    # order.save()
+    
+    # Send email to client
+    subject = "Ваш заказ принят специалистом"
+    message = f"""
+    Здравствуйте, {order.author.full_name}!
+
+    Специалист {request.user.full_name} принял ваш заказ "{order.task_name}".
+    
+    Детали заказа:
+    - Название: {order.task_name}
+    - Описание: {order.description}
+    - Сроки: {order.deadline}
+    - Оплата: {order.payment_min} - {order.payment_max} тенге
+    
+    Вы можете связаться со специалистом через чат на сайте.
+    
+    С уважением,
+    Команда CARE+
+    """
+    send_email_with_gmail(subject, message, order.author.email)
+    
     chat = Chat.objects.filter(
     (Q(user1=request.user, user2=order.author) | Q(user1=order.author, user2=request.user))).first()
     if not chat:
@@ -405,6 +424,26 @@ def order_request_accept(request, request_id):
     
     order_request.status = 'Принято'
     order_request.save()
+    
+    # Send email to specialist
+    subject = "Клиент принял ваш запрос"
+    message = f"""
+    Здравствуйте, {order_request.specialist.full_name}!
+
+    Клиент {request.user.full_name} принял ваш запрос на выполнение заказа "{order.task_name}".
+    
+    Детали заказа:
+    - Название: {order.task_name}
+    - Описание: {order.description}
+    - Сроки: {order.deadline}
+    - Оплата: {order.payment_min} - {order.payment_max} тенге
+    
+    Вы можете связаться с клиентом через чат на сайте.
+    
+    С уважением,
+    Команда CARE+
+    """
+    send_email_with_gmail(subject, message, order_request.specialist.email)
     
     chat = Chat.objects.filter(
     (Q(user1=order_request.specialist, user2=order.author) | Q(user1=order.author, user2=order_request.specialist))).first()
