@@ -19,12 +19,12 @@ def init(request):
     state = request.GET.get('state', '')
     
     auth_url = (
-        f"https://passport.aitu.io/oauth2/auth"
+        f"https://passport.test.supreme-team.tech/oauth2/auth"
         f"?response_type=code"
         f"&client_id={client_id}"
         f"&state={state}"
         f"&redirect_uri={redirect_uri}"
-        f"&scope=selfie%20identification_document_manual"
+        f"&scope=selfie%20id_card_manual"
     )
     
     return JsonResponse({'auth_url': auth_url})
