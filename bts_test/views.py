@@ -34,39 +34,35 @@ def redirect(request):
     """
     Save POST data to a file
     """
-    if request.method == 'POST':
-        data = request.POST.dict()
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        
-        # Create logs directory if it doesn't exist
-        logs_dir = os.path.join(settings.BASE_DIR, 'logs')
-        os.makedirs(logs_dir, exist_ok=True)
-        
-        # Save to redirect.log
-        log_file = os.path.join(logs_dir, 'redirect.log')
-        with open(log_file, 'a') as f:
-            f.write(f"[{timestamp}] {json.dumps(data)}\n")
-        
-        return JsonResponse({'status': 'success'})
-    return JsonResponse({'status': 'error', 'message': 'Only POST method is allowed'})
+    data = request.GET.dict()
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    # Create logs directory if it doesn't exist
+    logs_dir = os.path.join(settings.BASE_DIR, 'logs')
+    os.makedirs(logs_dir, exist_ok=True)
+    
+    # Save to redirect.log
+    log_file = os.path.join(logs_dir, 'redirect.log')
+    with open(log_file, 'a') as f:
+        f.write(f"[{timestamp}] {json.dumps(data)}\n")
+    
+    return JsonResponse({'status': 'success'})
 
 @csrf_exempt
 def logout(request):
     """
     Save logout POST data to a file
     """
-    if request.method == 'POST':
-        data = request.POST.dict()
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        
-        # Create logs directory if it doesn't exist
-        logs_dir = os.path.join(settings.BASE_DIR, 'logs')
-        os.makedirs(logs_dir, exist_ok=True)
-        
-        # Save to logout.log
-        log_file = os.path.join(logs_dir, 'logout.log')
-        with open(log_file, 'a') as f:
-            f.write(f"[{timestamp}] {json.dumps(data)}\n")
-        
-        return JsonResponse({'status': 'success'})
-    return JsonResponse({'status': 'error', 'message': 'Only POST method is allowed'}) 
+    data = request.GET.dict()
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    # Create logs directory if it doesn't exist
+    logs_dir = os.path.join(settings.BASE_DIR, 'logs')
+    os.makedirs(logs_dir, exist_ok=True)
+    
+    # Save to logout.log
+    log_file = os.path.join(logs_dir, 'logout.log')
+    with open(log_file, 'a') as f:
+        f.write(f"[{timestamp}] {json.dumps(data)}\n")
+    
+    return JsonResponse({'status': 'success'})
