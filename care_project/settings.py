@@ -39,7 +39,7 @@ SECRET_KEY = 'django-insecure-8rm+7m2v-&c1!dwbl%kce!h+_lpzs06j3%3drg-6^&dif2m%w+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['zabotaplus.kz', 'www.zabotaplus.kz']
+ALLOWED_HOSTS = ['zabotaplus.kz', 'www.zabotaplus.kz', 'localhost']
 
 
 # Application definition
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'care_app',
+    'bts_test',
 ]
 
 MIDDLEWARE = [
